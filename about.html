@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About Us — Potential Within Foundation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --unicef-blue: #1CABE2;
+    --unicef-dark-blue: #00539D;
+    --unicef-navy: #002F6C;
+    --unicef-yellow: #FFC20E;
+    --white: #FFFFFF;
+    --off-white: #F7FAFD;
+    --light-blue: #E8F4FB;
+    --mid-blue: #C8E5F5;
+    --text-dark: #1A1A2E;
+    --text-mid: #374151;
+    --text-light: #6B7280;
+    --border: rgba(28,171,226,0.15);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; color: var(--text-dark); background: var(--white); overflow-x: hidden; line-height: 1.6; }
+
+  /* HEADER */
+  header { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: var(--white); border-bottom: 1px solid var(--border); transition: box-shadow 0.3s ease; }
+  header.scrolled { box-shadow: 0 4px 30px rgba(0,83,157,0.12); }
+  .header-inner { max-width: 1280px; margin: 0 auto; padding: 0 2rem; height: 72px; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+  .logo { display: flex; align-items: center; gap: .6rem; text-decoration: none; flex-shrink: 0; }
+  .logo-img { width: 50px; height: 50px; border-radius: 50%; object-fit: cover; border: 2px solid #fff; }
+  .logo-text { display: flex; flex-direction: column; line-height: 1; }
+  .logo-text span:first-child { font-family: 'Source Serif 4', serif; font-weight: 700; font-size: 1.25rem; color: var(--unicef-dark-blue); letter-spacing: .04em; }
+  .logo-text span:last-child { font-size: .65rem; font-weight: 500; color: var(--unicef-blue); letter-spacing: .08em; text-transform: uppercase; }
+  
+  nav { display: flex; align-items: center; gap: .25rem; }
+  nav a { font-size: 0.875rem; font-weight: 500; color: var(--text-mid); text-decoration: none; padding: 0.5rem 0.75rem; border-radius: 6px; transition: all 0.2s; white-space: nowrap; }
+  nav a:hover, nav a.active { color: var(--unicef-blue); background: var(--light-blue); }
+  .btn-donate-header { background: var(--unicef-blue); color: var(--white) !important; padding: 0.6rem 1.4rem !important; border-radius: 50px !important; font-weight: 600 !important; font-size: 0.875rem !important; box-shadow: 0 2px 12px rgba(28,171,226,0.35); transition: all 0.25s !important; }
+  .btn-donate-header:hover { background: var(--unicef-dark-blue) !important; transform: translateY(-1px); }
+  
+  .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 0.5rem; border: none; background: none; }
+  .hamburger span { width: 24px; height: 2px; background: var(--text-dark); border-radius: 2px; transition: all 0.3s; display: block; }
+  
+  .mobile-nav { display: none; position: fixed; top: 72px; left: 0; right: 0; background: var(--white); border-bottom: 1px solid var(--border); padding: 1rem; z-index: 999; flex-direction: column; gap: 0.5rem; box-shadow: 0 8px 30px rgba(0,0,0,0.08); }
+  .mobile-nav.open { display: flex; }
+  .mobile-nav a { color: var(--text-dark); text-decoration: none; font-weight: 500; padding: 0.75rem 1rem; border-radius: 8px; transition: all 0.2s; }
+  .mobile-nav a:hover { background: var(--light-blue); color: var(--unicef-blue); }
+  .mobile-nav .btn-donate-mobile { background: var(--unicef-blue); color: var(--white); text-align: center; border-radius: 50px; font-weight: 600; }
+  
+  @media (max-width: 900px) { nav { display: none; } .hamburger { display: flex; } }
+
+  /* HERO */
+  .page-hero {
+    margin-top: 72px;
+    background: linear-gradient(135deg, rgba(0,47,108,0.92) 0%, rgba(0,83,157,0.88) 55%, rgba(28,171,226,0.85) 100%),
+      url('https://images.unsplash.com/photo-1531219432768-9f540ce91ef3?w=1400&q=80') center/cover no-repeat;
+    padding: clamp(4rem, 8vw, 7rem) 2rem clamp(3rem, 6vw, 5rem);
+    position: relative; overflow: hidden;
+  }
+  .page-hero::before {
+    content: ''; position: absolute; top: -40%; right: -10%;
+    width: min(600px, 80vw); height: min(600px, 80vw);
+    background: radial-gradient(circle, rgba(255,194,14,.08) 0%, transparent 65%);
+    border-radius: 50%; pointer-events: none;
+  }
+  .page-hero::after {
+    content: ''; position: absolute; bottom: -30%; left: -15%;
+    width: min(500px, 70vw); height: min(500px, 70vw);
+    background: radial-gradient(circle, rgba(28,171,226,.12) 0%, transparent 65%);
+    border-radius: 50%; pointer-events: none;
+  }
+  .hero-inner { max-width: 1280px; margin: 0 auto; position: relative; z-index: 1; }
+  .breadcrumb { display: flex; align-items: center; gap: .5rem; font-size: .78rem; color: rgba(255,255,255,.5); margin-bottom: 1.5rem; flex-wrap: wrap; }
+  .breadcrumb a { color: rgba(255,255,255,.65); text-decoration: none; transition: color .2s; }
+  .breadcrumb a:hover { color: var(--unicef-yellow); }
+  .breadcrumb span { color: rgba(255,255,255,.35); }
+  
+  .hero-eyebrow {
+    font-size: .72rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: .16em; color: var(--unicef-yellow);
+    display: flex; align-items: center; gap: .75rem; margin-bottom: 1.25rem;
+  }
+  .hero-eyebrow::before, .hero-eyebrow::after { content: ''; width: 24px; height: 2px; background: var(--unicef-yellow); border-radius: 2px; }
+  
+  .page-hero h1 {
+    font-family: 'Source Serif 4', serif;
+    font-size: clamp(2.2rem, 5vw, 4.2rem);
+    font-weight: 700; color: var(--white); line-height: 1.1; margin-bottom: 1.25rem;
+    max-width: 800px;
+  }
+  .page-hero h1 em { font-style: italic; color: var(--unicef-yellow); }
+  
+  .hero-sub {
+    font-size: clamp(.95rem, 2vw, 1.15rem); color: rgba(255,255,255,.8);
+    max-width: 640px; line-height: 1.8; margin-bottom: 2rem;
+  }
+  .hero-stats {
+    display: flex; gap: 3rem; flex-wrap: wrap; margin-top: 2.5rem;
+    padding-top: 2.5rem; border-top: 1px solid rgba(255,255,255,.15);
+  }
+  .hero-stat { display: flex; flex-direction: column; gap: .25rem; }
+  .hero-stat-num {
+    font-family: 'Source Serif 4', serif; font-size: clamp(1.8rem, 3vw, 2.4rem);
+    font-weight: 700; color: var(--unicef-yellow); line-height: 1;
+  }
+  .hero-stat-label {
+    font-size: .75rem; font-weight: 600; text-transform: uppercase;
+    letter-spacing: .08em; color: rgba(255,255,255,.7);
+  }
+  @media (max-width: 600px) {
+    .hero-stats { gap: 2rem; }
+    .hero-stat-num { font-size: 1.6rem; }
+  }
+
+  /* SECTIONS BASE */
+  .page-section { padding: 6rem 2rem; }
+  .page-section.alt { background: var(--off-white); }
+  .container { max-width: 1280px; margin: 0 auto; }
+  .section-label { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.14em; color: var(--unicef-blue); display: flex; align-items: center; gap: 0.65rem; margin-bottom: 0.75rem; }
+  .section-label::before { content: ''; width: 20px; height: 2px; background: var(--unicef-blue); border-radius: 2px; }
+  .section-title { font-family: 'Source Serif 4', serif; font-size: clamp(1.8rem, 3vw, 2.8rem); font-weight: 700; color: var(--unicef-navy); line-height: 1.12; margin-bottom: 1rem; }
+  .section-title em { font-style: italic; color: var(--unicef-blue); }
+
+  /* WHO WE ARE */
+  .who-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: center; }
+  .who-body { font-size: 1.05rem; color: var(--text-mid); line-height: 1.85; margin-top: 1.5rem; }
+  .who-body p + p { margin-top: 1.1rem; }
+  .who-pullquote { font-family: 'Source Serif 4', serif; font-size: 1.25rem; font-style: italic; color: var(--unicef-navy); line-height: 1.6; border-left: 4px solid var(--unicef-blue); padding: 1rem 0 1rem 1.75rem; margin: 2rem 0; }
+  .who-visual { position: relative; }
+  .who-img-main { width: 100%; height: 520px; object-fit: cover; display: block; }
+  .who-img-inset { position: absolute; bottom: -2.5rem; right: -2.5rem; width: 48%; height: 200px; object-fit: cover; border: 5px solid var(--white); box-shadow: 0 12px 40px rgba(0,47,108,0.18); display: block; }
+  .who-img-badge { position: absolute; top: 2rem; left: -2rem; background: var(--unicef-blue); color: var(--white); padding: 1.25rem 1.5rem; box-shadow: 0 8px 30px rgba(28,171,226,0.4); }
+  .wib-num { font-family: 'Source Serif 4', serif; font-size: 2.2rem; font-weight: 700; line-height: 1; display: block; }
+  .wib-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.08em; opacity: 0.85; }
+  @media (max-width: 900px) { 
+    .who-grid { grid-template-columns: 1fr; gap: 3rem; } 
+    .who-img-inset { right: 0; } 
+    .who-img-badge { left: 0; } 
+    .who-visual { padding-bottom: 3rem; } 
+  }
+
+  /* MANDATE */
+  .mandate-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; }
+  @media (max-width: 900px) { .mandate-layout { grid-template-columns: 1fr; gap: 3rem; } }
+  .mandate-body { font-size: 1rem; color: var(--text-mid); line-height: 1.8; margin-top: 1.5rem; }
+  .mandate-body p + p { margin-top: 1rem; }
+  .principles-list { list-style: none; margin-top: 2rem; display: flex; flex-direction: column; gap: 0; }
+  .principle-item { display: grid; grid-template-columns: 48px 1fr; gap: 1rem; padding: 1.5rem 0; border-top: 1px solid var(--border); align-items: start; }
+  .principle-item:last-child { border-bottom: 1px solid var(--border); }
+  .principle-num { font-family: 'Source Serif 4', serif; font-size: 1.8rem; font-weight: 300; color: var(--mid-blue); line-height: 1; text-align: center; padding-top: 0.1rem; transition: color 0.3s; }
+  .principle-item:hover .principle-num { color: var(--unicef-blue); }
+  .principle-name { font-family: 'Source Serif 4', serif; font-size: 1rem; font-weight: 700; color: var(--unicef-navy); margin-bottom: 0.3rem; }
+  .principle-desc { font-size: 0.88rem; color: var(--text-mid); line-height: 1.65; }
+
+  /* FOOTER */
+  footer { background: var(--unicef-navy); color: var(--white); padding: 4rem 2rem 2rem; }
+  .footer-top { max-width: 1280px; margin: 0 auto; display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 3rem; margin-bottom: 3rem; }
+  .footer-brand .logo-text span:first-child { color: var(--white); }
+  .footer-tagline { font-size: 0.875rem; color: rgba(255,255,255,0.65); line-height: 1.7; margin-top: 1rem; margin-bottom: 1.5rem; }
+  .footer-socials { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+  .social-btn { width: 38px; height: 38px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: var(--white); text-decoration: none; font-size: 0.875rem; font-weight: 700; transition: all 0.25s; }
+  .social-btn:hover { background: var(--unicef-blue); border-color: var(--unicef-blue); transform: translateY(-2px); }
+  .footer-col-title { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.5); margin-bottom: 1.25rem; }
+  .footer-links { list-style: none; }
+  .footer-links li { margin-bottom: 0.6rem; }
+  .footer-links a { font-size: 0.875rem; color: rgba(255,255,255,0.72); text-decoration: none; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--unicef-blue); }
+  .footer-bottom { max-width: 1280px; margin: 0 auto; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 2rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+  .footer-copy { font-size: 0.8rem; color: rgba(255,255,255,0.45); }
+  .footer-legal { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+  .footer-legal a { font-size: 0.8rem; color: rgba(255,255,255,0.45); text-decoration: none; transition: color 0.2s; }
+  .footer-legal a:hover { color: var(--unicef-blue); }
+  @media (max-width: 900px) { .footer-top { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 600px) { .footer-top { grid-template-columns: 1fr; gap: 2rem; } .footer-bottom { flex-direction: column; text-align: center; } }
+
+  /* REVEAL ANIMATION */
+  .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .r1 { transition-delay: 0.1s; } .r2 { transition-delay: 0.2s; } .r3 { transition-delay: 0.3s; }
+</style>
+</head>
+<body>
+
+<header id="header" role="banner">
+  <div class="header-inner">
+    <a href="index.html" class="logo" aria-label="Potential Within Foundation Homepage">
+      <img src="lo.jpg" alt="Logo" class="logo-img">
+      <div class="logo-text"><span>POTENTIAL</span><span>Within Foundation</span></div>
+    </a>
+    <nav role="navigation" aria-label="Main navigation">
+      <a href="index.html">Home</a>
+      <a href="about.html" class="active">What We Do</a>
+      <a href="team.html">Our Team</a>
+      <a href="contact.html">Contact</a>
+      <a href="donate.html" class="btn-donate-header">Donate</a>
+    </nav>
+    <button class="hamburger" aria-label="Toggle mobile menu" aria-expanded="false" onclick="toggleMenu(this)">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<nav class="mobile-nav" id="mobileNav" aria-label="Mobile navigation">
+  <a href="index.html">Home</a>
+  <a href="about.html">What We Do</a>
+  <a href="team.html">Our Team</a>
+  <a href="contact.html">Contact</a>
+  <a href="donate.html" class="btn-donate-header">Donate</a>
+</nav>
+
+<!-- HERO -->
+<div class="page-hero">
+  <div class="hero-inner">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="index.html">Home</a>
+      <span aria-hidden="true">›</span>
+      <strong style="color:rgba(255,255,255,.9)">About Us</strong>
+    </nav>
+    <div class="hero-eyebrow" aria-hidden="true">Who We Are</div>
+    
+    </div>
+  </div>
+</div>
+
+<!-- WHO WE ARE -->
+<section class="page-section" id="who" aria-labelledby="who-heading">
+  <div class="container">
+    <div class="who-grid">
+      <div class="who-text reveal">
+        <div class="section-label">Who We Are</div>
+        <h2 class="section-title" id="who-heading">The World's Foremost Organisation <em>for Youths</em></h2>
+        <div class="who-body">
+          <p>Potential Within Foundation (PWF) is committed to becoming a leading force in youth empowerment by unlocking the potential that exists within every young person. We believe that today's youth are tomorrow's leaders, innovators, and changemakers. Through mentorship, leadership development, emotional support, life skills training, and community engagement, we empower young people to overcome challenges, pursue their dreams, and create lasting positive impact in their communities.</p>
+          <p>Our vision extends beyond borders as we strive to build a generation of confident, resilient, and purpose-driven youth who are equipped to shape a better future for themselves and the world.</p>
+          <blockquote class="who-pullquote">"POTENTIAL WITHIN FOUNDATION has more impact on the lives of youths. We work where others cannot, reach those who need us most, and leave behind systems that outlast any single programme."</blockquote>
+        </div>
+      </div>
+      <div class="who-visual reveal r1">
+        <img class="who-img-main" src="IMG-20260522-WA0029.jpg" alt="Youth empowerment session" loading="lazy">
+        <img class="who-img-inset" src="IMG-20260522-WA0047.jpg" alt="Community engagement" loading="lazy">
+        <div class="who-img-badge" aria-label="6 months of impact">
+          <span class="wib-num">6</span>
+          <span class="wib-label">Months of Impact</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MANDATE -->
+<section class="page-section alt" id="mandate" aria-labelledby="mandate-heading">
+  <div class="container">
+    <div class="mandate-layout">
+      <div class="reveal">
+        <div class="section-label">Legal Basis</div>
+        <h2 class="section-title" id="mandate-heading">Our Mandate &amp; <em>Guiding Principles</em></h2>
+        <div class="mandate-body">
+          <p>The Potential Within Foundation (PWF) is mandated to empower young people in Malawi by providing emotional support, mindset transformation, leadership development, mentorship, life skills training, and community engagement. Our work is guided by a set of core principles that shape every aspect of the organization. We uphold integrity by maintaining honesty and ethical conduct, and accountability through responsible resource management and transparent decision-making.</p>
+          <p>We promote empowerment by creating opportunities for youth to realize their full potential, and inclusiveness by ensuring equal participation and respect for all individuals. Innovation drives our creative and problem-solving approaches, while teamwork fosters collaboration among staff, volunteers, and stakeholders.</p>
+          <p>We operate with respect for human dignity and diversity, and maintain transparency in all organizational activities to build trust and credibility. These guiding principles ensure that PWF remains committed to developing resilient, responsible, and purpose-driven young leaders who can positively transform their communities.</p>
+        </div>
+      </div>
+      <div class="reveal r1">
+        <div class="section-label">Core Principles</div>
+        <h3 class="section-title" style="font-size:1.4rem;margin-bottom:0">How We Work</h3>
+        <ol class="principles-list" aria-label="PWF guiding principles">
+          <li class="principle-item">
+            <div class="principle-num">01</div>
+            <div>
+              <div class="principle-name">Youth Rights-Based Approach</div>
+              <p class="principle-desc">Every intervention is framed through the lens of Youth — not as charity, but as the fulfilment of legally recognised entitlements that governments have obligations to meet.</p>
+            </div>
+          </li>
+          <li class="principle-item">
+            <div class="principle-num">02</div>
+            <div>
+              <div class="principle-name">Equity &amp; Non-Discrimination</div>
+              <p class="principle-desc">We prioritise the most disadvantaged youth— those excluded by poverty, geography, gender, ethnicity, disability, or conflict. Reaching them is not an aspiration; it is our central organising principle.</p>
+            </div>
+          </li>
+          <li class="principle-item">
+            <div class="principle-num">03</div>
+            <div>
+              <div class="principle-name">Do No Harm</div>
+              <p class="principle-desc">Every programme undergoes rigorous safeguarding assessment, and we maintain zero tolerance for any form of exploitation or abuse by staff or partners operating on our behalf.</p>
+            </div>
+          </li>
+          <li class="principle-item">
+            <div class="principle-num">04</div>
+            <div>
+              <div class="principle-name">Neutrality &amp; Independence</div>
+              <p class="principle-desc">In humanitarian settings, PWF provides services based solely on need, without favouring any side in a conflict. This principle protects our access to the most vulnerable youth in the most dangerous places.</p>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer role="contentinfo">
+  <div class="footer-top">
+    <div class="footer-brand">
+      <a href="index.html" class="logo" aria-label="PWF Homepage">
+        <img src="lo.jpg" alt="Logo" class="logo-img">
+        <div class="logo-text"><span>POTENTIAL</span><span>Within Foundation</span></div>
+      </a>
+      <p class="footer-tagline">POTENTIAL WITHIN FOUNDATION works to empower young people to achieve great things in life and push them towards their fullest potential.</p>
+      <div class="footer-socials" aria-label="Social media">
+        <a href="https://www.facebook.com/share/1LtgaLbTrs/" class="social-btn" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-title">Contact</div>
+      <ul class="footer-links">
+        <li><a href="mailto:potentialwithin@gmail.com">potentialwithin@gmail.com</a></li>
+        <li><a href="tel:+265889464089">+265 889 464 089</a></li>
+        <li><span style="font-size:.875rem;color:rgba(255,255,255,.72);">Nkhotakota, Malawi</span></li>
+      </ul>
+    </div>
+  </div>
+  
+  <div class="footer-bottom">
+    <p class="footer-copy">© 2026 POTENTIAL WITHIN FOUNDATION. All rights reserved.</p>
+    <nav class="footer-legal" aria-label="Legal links">
+      <a href="https://www.facebook.com/mtweega.damzy">Designed by ADAM MAKOLONI</a>
+    </nav>
+  </div>
+</footer>
+
+<script>
+  // Header scroll effect
+  const header = document.getElementById('header');
+  window.addEventListener('scroll', () => { 
+    header.classList.toggle('scrolled', window.scrollY > 50); 
+  }, { passive: true });
+
+  // Mobile menu toggle
+  function toggleMenu(btn) {
+    const nav = document.getElementById('mobileNav');
+    const isOpen = nav.classList.toggle('open');
+    btn.setAttribute('aria-expanded', isOpen);
+    const s = btn.querySelectorAll('span');
+    if (isOpen) { 
+      s[0].style.transform = 'rotate(45deg) translate(5px, 5px)'; 
+      s[1].style.opacity = '0'; 
+      s[2].style.transform = 'rotate(-45deg) translate(5px, -5px)'; 
+    } else { 
+      s.forEach(x => { x.style.transform = ''; x.style.opacity = ''; }); 
+    }
+  }
+
+  // Close mobile menu on link click
+  document.querySelectorAll('.mobile-nav a').forEach(a => {
+    a.addEventListener('click', () => {
+      document.getElementById('mobileNav').classList.remove('open');
+      const btn = document.querySelector('.hamburger');
+      btn.setAttribute('aria-expanded', 'false');
+      btn.querySelectorAll('span').forEach(x => { x.style.transform = ''; x.style.opacity = ''; });
+    });
+  });
+
+  // Scroll reveal animation
+  const reveals = document.querySelectorAll('.reveal');
+  const revObs = new IntersectionObserver(entries => {
+    entries.forEach(e => { 
+      if (e.isIntersecting) { 
+        e.target.classList.add('visible'); 
+        revObs.unobserve(e.target); 
+      } 
+    });
+  }, { threshold: 0.07, rootMargin: '0px 0px -40px 0px' });
+  
+  reveals.forEach(el => revObs.observe(el));
+</script>
+</body>
+</html>

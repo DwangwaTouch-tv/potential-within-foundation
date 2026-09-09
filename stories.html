@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stories from the Field — PWF</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+<style>
+/* ─── TOKENS ──────────────────────────────────────────── */
+:root{
+  --blue:#1CABE2;--dark-blue:#00539D;--navy:#002F6C;
+  --yellow:#FFC20E;--red:#E2231A;
+  --white:#fff;--off:#F7FAFD;--lb:#E8F4FB;--mb:#C8E5F5;
+  --dark:#1A1A2E;--mid:#374151;--light:#6B7280;
+  --border:rgba(28,171,226,0.15);
+  --page-pad:clamp(1rem,4vw,2rem);
+  --container:1280px;
+  --hdr-h:72px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{font-family:'DM Sans',sans-serif;color:var(--dark);background:var(--white);overflow-x:hidden;line-height:1.6}
+img{max-width:100%;height:auto;display:block}
+button{font-family:inherit}
+
+/* ─── HEADER ──────────────────────────────────────────── */
+header{position:fixed;top:0;left:0;right:0;z-index:1000;background:var(--white);border-bottom:1px solid var(--border);transition:box-shadow .3s}
+header.scrolled{box-shadow:0 4px 30px rgba(0,83,157,.12)}
+.hdr{max-width:var(--container);margin:0 auto;padding:0 var(--page-pad);height:var(--hdr-h);display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.logo{display:flex;align-items:center;gap:.55rem;text-decoration:none;flex-shrink:0}
+.logo-mark{width:40px;height:40px;background:var(--blue);border-radius:50%;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;flex-shrink:0}
+.logo-mark::before{content:'';position:absolute;width:26px;height:26px;border:3px solid var(--white);border-radius:50%}
+.logo-mark::after{content:'♦';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);color:var(--white);font-size:9px}
+.logo-text{display:flex;flex-direction:column;line-height:1}
+.logo-text .lt-name{font-family:'Source Serif 4',serif;font-weight:700;font-size:1.15rem;color:var(--dark-blue);letter-spacing:.04em}
+.logo-text .lt-tag{font-size:.6rem;font-weight:500;color:var(--blue);letter-spacing:.08em;text-transform:uppercase}
+.desk-nav{display:flex;align-items:center;gap:.15rem}
+.desk-nav a{font-size:.82rem;font-weight:500;color:var(--mid);text-decoration:none;padding:.45rem .65rem;border-radius:6px;transition:all .2s;white-space:nowrap}
+.desk-nav a:hover,.desk-nav a.active{color:var(--blue);background:var(--lb)}
+.btn-donate-hdr{background:var(--blue)!important;color:var(--white)!important;padding:.55rem 1.2rem!important;border-radius:50px!important;font-weight:600!important;font-size:.82rem!important;box-shadow:0 2px 10px rgba(28,171,226,.35);transition:all .25s!important}
+.btn-donate-hdr:hover{background:var(--dark-blue)!important;transform:translateY(-1px)}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:.45rem;border:none;background:none;flex-shrink:0}
+.hamburger span{width:22px;height:2px;background:var(--dark);border-radius:2px;transition:all .3s;display:block}
+.mob-nav{display:none;position:fixed;top:var(--hdr-h);left:0;right:0;background:var(--white);border-bottom:1px solid var(--border);padding:1rem var(--page-pad);z-index:999;flex-direction:column;gap:.4rem;box-shadow:0 8px 30px rgba(0,0,0,.08);max-height:calc(100vh - var(--hdr-h));overflow-y:auto}
+.mob-nav.open{display:flex}
+.mob-nav a{color:var(--dark);text-decoration:none;font-weight:500;padding:.75rem 1rem;border-radius:8px;transition:all .2s;font-size:.95rem}
+.mob-nav a:hover{background:var(--lb);color:var(--blue)}
+.mob-nav .mob-donate{background:var(--blue);color:var(--white)!important;text-align:center;border-radius:50px;font-weight:600;margin-top:.25rem}
+@media(max-width:960px){.desk-nav{display:none}.hamburger{display:flex}}
+@media(min-width:961px) and (max-width:1100px){.desk-nav a{padding:.45rem .5rem;font-size:.78rem}.logo-text .lt-name{font-size:1rem}}
+
+/* ─── PAGE HERO ───────────────────────────────────────── */
+.page-hero{
+  margin-top:var(--hdr-h);
+  background:
+    linear-gradient(135deg,rgba(0,47,108,.88) 0%,rgba(0,83,157,.82) 55%,rgba(28,171,226,.80) 100%),
+    url('https://images.unsplash.com/photo-1509062522246-3755977927d7?w=1400&q=80') center/cover no-repeat;
+  padding:clamp(2.5rem,6vw,5rem) var(--page-pad) clamp(2rem,5vw,4rem);
+  position:relative;overflow:hidden;
+}
+.page-hero::before{content:'';position:absolute;top:-40%;right:-10%;width:min(600px,80vw);height:min(600px,80vw);background:radial-gradient(circle,rgba(28,171,226,.12) 0%,transparent 65%);border-radius:50%;pointer-events:none}
+.hero-inner{max-width:var(--container);margin:0 auto;position:relative;z-index:1}
+.breadcrumb{display:flex;align-items:center;gap:.5rem;font-size:.78rem;color:rgba(255,255,255,.5);margin-bottom:1.5rem;flex-wrap:wrap}
+.breadcrumb a{color:rgba(255,255,255,.65);text-decoration:none;transition:color .2s}
+.breadcrumb a:hover{color:var(--yellow)}
+.breadcrumb span{color:rgba(255,255,255,.35)}
+.hero-eyebrow{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:var(--yellow);display:flex;align-items:center;gap:.65rem;margin-bottom:.9rem}
+.hero-eyebrow::before,.hero-eyebrow::after{content:'';width:20px;height:2px;background:var(--yellow);border-radius:2px}
+.page-hero h1{font-family:'Source Serif 4',serif;font-size:clamp(1.9rem,5vw,3.8rem);font-weight:700;color:var(--white);line-height:1.08;margin-bottom:1rem}
+.page-hero h1 em{font-style:italic;color:var(--yellow)}
+.hero-sub{font-size:clamp(.9rem,2vw,1.05rem);color:rgba(255,255,255,.75);max-width:560px;line-height:1.75;margin-bottom:2rem}
+.filter-row{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap}
+.f-btn{font-size:.75rem;font-weight:600;padding:.4rem 1rem;border-radius:50px;border:1.5px solid rgba(255,255,255,.3);background:transparent;color:rgba(255,255,255,.8);cursor:pointer;transition:all .25s;font-family:inherit;letter-spacing:.03em;touch-action:manipulation}
+.f-btn:hover,.f-btn.active{background:var(--yellow);color:var(--dark);border-color:var(--yellow)}
+@media(max-width:480px){.f-btn{font-size:.7rem;padding:.35rem .8rem}}
+
+/* ─── LAYOUT ──────────────────────────────────────────── */
+.page-body{max-width:var(--container);margin:0 auto;padding:0 var(--page-pad);display:grid;grid-template-columns:1fr 300px;gap:clamp(2rem,4vw,4rem);align-items:start}
+@media(min-width:1280px){.page-body{grid-template-columns:1fr 320px}}
+@media(max-width:1024px){.page-body{grid-template-columns:1fr}}
+
+/* ─── SHARED META ─────────────────────────────────────── */
+.tag{font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:var(--blue);display:inline-flex;align-items:center;gap:.3rem;flex-shrink:0}
+.tag::before{content:'';width:6px;height:6px;border-radius:50%;background:currentColor;flex-shrink:0}
+.tag.education{color:var(--dark-blue)}.tag.wash{color:#0077B6}.tag.nutrition{color:#4A7C59}.tag.health{color:#0A9396}.tag.emergency{color:var(--red)}
+.meta-sep{width:3px;height:3px;border-radius:50%;background:var(--border);flex-shrink:0}
+.meta-date,.meta-read{font-size:.72rem;color:var(--light);white-space:nowrap}
+.read-link{font-size:.8rem;font-weight:700;color:var(--blue);display:inline-flex;align-items:center;gap:.35rem;text-decoration:none;border-bottom:1px solid transparent;padding-bottom:1px;transition:all .2s;margin-left:auto;flex-shrink:0}
+.read-link i{font-size:.65rem;transition:transform .2s}
+.read-link:hover{color:var(--dark-blue);border-bottom-color:var(--dark-blue)}
+.read-link:hover i{transform:translateX(4px)}
+
+/* ─── LEAD STORY ──────────────────────────────────────── */
+.lead-story{padding:clamp(2rem,4vw,4rem) 0 0;border-bottom:1px solid var(--border)}
+.lead-img-wrap{position:relative;overflow:hidden}
+.lead-img{width:100%;height:clamp(200px,40vw,520px);object-fit:cover;object-position:center top;filter:brightness(.92);transition:filter .5s,transform .6s}
+.lead-story:hover .lead-img{filter:brightness(1);transform:scale(1.015)}
+.lead-img-wrap::after{content:'';position:absolute;bottom:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--blue),var(--dark-blue))}
+.lead-meta{display:flex;align-items:center;gap:.75rem;flex-wrap:wrap;padding:1.25rem 0 .6rem}
+.lead-title{font-family:'Source Serif 4',serif;font-size:clamp(1.4rem,4vw,2.8rem);font-weight:700;color:var(--navy);line-height:1.12;margin-bottom:.85rem;cursor:pointer;transition:color .25s}
+.lead-story:hover .lead-title{color:var(--blue)}
+.lead-excerpt{font-size:clamp(.88rem,2vw,1.05rem);color:var(--mid);line-height:1.8;margin-bottom:1.25rem}
+.lead-byline{display:flex;align-items:center;gap:.65rem;padding-bottom:clamp(1.5rem,4vw,2.5rem);flex-wrap:wrap}
+.b-avatar{width:34px;height:34px;border-radius:50%;background:var(--lb);display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:700;color:var(--dark-blue);flex-shrink:0}
+.b-name{font-size:.82rem;font-weight:600;color:var(--navy)}
+.b-role{font-size:.7rem;color:var(--light)}
+
+/* ─── EDITORIAL ROWS ──────────────────────────────────── */
+.editorial-list{display:flex;flex-direction:column}
+.editorial{display:grid;grid-template-columns:clamp(180px,32%,380px) 1fr;border-top:1px solid var(--border);cursor:pointer;transition:opacity .2s}
+.editorial:hover .ed-img{transform:scale(1.04);filter:grayscale(0%)}
+.editorial:hover .ed-title{color:var(--blue)}
+.ed-img-wrap{overflow:hidden;position:relative}
+.ed-img{width:100%;height:clamp(180px,25vw,280px);object-fit:cover;object-position:top;filter:grayscale(10%);transition:transform .5s,filter .4s}
+.ed-img-wrap::after{content:'';position:absolute;top:0;right:0;width:3px;height:100%;background:var(--lb);transition:background .3s}
+.editorial:hover .ed-img-wrap::after{background:var(--blue)}
+.ed-body{padding:clamp(1.25rem,2.5vw,2.5rem) clamp(1rem,2.5vw,2.5rem) clamp(1.25rem,2.5vw,2.5rem) clamp(1.25rem,2.5vw,3rem);display:flex;flex-direction:column;justify-content:center}
+.ed-meta{display:flex;align-items:center;gap:.65rem;flex-wrap:wrap;margin-bottom:.75rem}
+.ed-title{font-family:'Source Serif 4',serif;font-size:clamp(1rem,2.2vw,1.3rem);font-weight:700;color:var(--navy);line-height:1.25;margin-bottom:.65rem;transition:color .25s}
+.ed-excerpt{font-size:clamp(.82rem,1.6vw,.9rem);color:var(--mid);line-height:1.7;margin-bottom:1.1rem;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.ed-footer{display:flex;align-items:center;justify-content:space-between;gap:.75rem;flex-wrap:wrap}
+.ed-author{display:flex;align-items:center;gap:.45rem}
+.ed-av{width:26px;height:26px;border-radius:50%;background:var(--lb);display:flex;align-items:center;justify-content:center;font-size:.6rem;font-weight:700;color:var(--dark-blue);flex-shrink:0}
+.ed-name{font-size:.75rem;font-weight:600;color:var(--mid)}
+.ed-date{font-size:.7rem;color:var(--light)}
+.editorial.flip{grid-template-columns:1fr clamp(180px,32%,380px)}
+.editorial.flip .ed-img-wrap{order:2}
+.editorial.flip .ed-body{order:1;padding-left:clamp(1rem,2.5vw,2.5rem);padding-right:clamp(1.25rem,2.5vw,3rem)}
+.editorial.flip .ed-img-wrap::after{left:0;right:auto}
+@media(max-width:700px){
+  .editorial,.editorial.flip{grid-template-columns:1fr}
+  .editorial.flip .ed-img-wrap,.editorial.flip .ed-body{order:unset}
+  .ed-img{height:clamp(160px,45vw,220px)}
+  .ed-body,.editorial.flip .ed-body{padding:1.1rem 0 1.5rem}
+  .ed-img-wrap::after{display:none}
+  .ed-excerpt{-webkit-line-clamp:2}
+}
+
+/* ─── LOAD MORE ───────────────────────────────────────── */
+.load-more-area{padding:clamp(1.5rem,4vw,3rem) 0;border-top:1px solid var(--border);text-align:center}
+.load-more-rule{display:flex;align-items:center;gap:1.25rem;margin-bottom:1.5rem}
+.load-more-rule::before,.load-more-rule::after{content:'';flex:1;height:1px;background:var(--border)}
+.load-more-label{font-size:.72rem;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--light);white-space:nowrap}
+.btn-more{display:inline-flex;align-items:center;gap:.55rem;background:var(--blue);color:var(--white);font-weight:600;font-size:.875rem;padding:.8rem clamp(1.25rem,4vw,2rem);border-radius:50px;border:none;cursor:pointer;transition:all .3s;font-family:inherit;letter-spacing:.02em;box-shadow:0 4px 16px rgba(28,171,226,.3);touch-action:manipulation}
+.btn-more:hover{background:var(--dark-blue);transform:translateY(-2px);box-shadow:0 6px 24px rgba(28,171,226,.4)}
+.btn-more:disabled{opacity:.5;cursor:not-allowed;transform:none}
+
+/* ─── SIDEBAR ─────────────────────────────────────────── */
+.sidebar{padding-top:clamp(2rem,4vw,4rem);display:flex;flex-direction:column;gap:2.5rem}
+@media(max-width:1024px){.sidebar{padding-top:0;border-top:2px solid var(--border)}}
+.w-label{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--blue);display:flex;align-items:center;gap:.45rem;margin-bottom:.85rem}
+.w-label::before{content:'';width:12px;height:2px;background:var(--blue);border-radius:2px}
+
+.donate-band{background:linear-gradient(135deg,var(--navy),var(--dark-blue));padding:clamp(1.25rem,3vw,2rem) clamp(1.25rem,3vw,1.5rem);position:relative;overflow:hidden}
+.donate-band::before{content:'';position:absolute;top:-40%;right:-40%;width:200px;height:200px;background:radial-gradient(circle,rgba(28,171,226,.15) 0%,transparent 65%);border-radius:50%;pointer-events:none}
+.donate-icon{font-size:1.8rem;margin-bottom:.65rem;display:block;position:relative;z-index:1;color:var(--white)}
+.donate-title{font-family:'Source Serif 4',serif;font-size:1.1rem;font-weight:700;color:var(--white);margin-bottom:.4rem;position:relative;z-index:1}
+.donate-text{font-size:.82rem;color:rgba(255,255,255,.72);line-height:1.65;margin-bottom:1.1rem;position:relative;z-index:1}
+.btn-donate-band{width:100%;background:var(--yellow);color:var(--dark);font-weight:700;font-size:.875rem;padding:.75rem;border:none;cursor:pointer;transition:all .25s;font-family:inherit;position:relative;z-index:1;touch-action:manipulation}
+.btn-donate-band:hover{background:var(--white);transform:translateY(-1px)}
+
+.trending-list{display:flex;flex-direction:column}
+.trending-item{display:flex;align-items:flex-start;gap:.65rem;padding:.8rem 0;border-bottom:1px solid var(--border);cursor:pointer;transition:all .2s}
+.trending-item:first-child{border-top:1px solid var(--border)}
+.trending-item:last-child{border-bottom:none}
+.trending-item:hover .trending-title{color:var(--blue)}
+.trending-item:hover .t-num{color:var(--blue)}
+.t-num{font-family:'Source Serif 4',serif;font-size:1.3rem;font-weight:300;color:var(--mb);line-height:1;flex-shrink:0;width:24px;transition:color .2s}
+.trending-title{font-size:.82rem;font-weight:600;color:var(--navy);line-height:1.35;margin-bottom:.15rem;transition:color .2s}
+.trending-sub{font-size:.68rem;color:var(--light)}
+@media(max-width:1024px){.trending-item:nth-child(n+4){display:none}}
+
+.topics-cloud{display:flex;flex-wrap:wrap;gap:.4rem}
+.topic-pill{font-size:.7rem;font-weight:600;text-transform:uppercase;letter-spacing:.06em;padding:.3rem .75rem;background:var(--lb);color:var(--dark-blue);border-radius:50px;cursor:pointer;transition:all .2s;border:1.5px solid transparent;touch-action:manipulation}
+.topic-pill:hover{background:var(--blue);color:var(--white);transform:translateY(-1px)}
+
+.nl-desc{font-size:.82rem;color:var(--mid);line-height:1.65;margin-bottom:.65rem}
+.newsletter-form{display:flex;flex-direction:column;gap:.6rem}
+.nl-input{font-size:.875rem;font-family:inherit;padding:.7rem 1rem;border:1.5px solid var(--border);background:var(--off);color:var(--dark);transition:border-color .2s;width:100%;-webkit-appearance:none;border-radius:0}
+.nl-input:focus{outline:none;border-color:var(--blue);background:var(--white)}
+.nl-input::placeholder{color:var(--light)}
+.btn-subscribe{width:100%;background:var(--blue);color:var(--white);font-weight:600;font-size:.875rem;padding:.75rem;border:none;cursor:pointer;transition:all .25s;font-family:inherit;letter-spacing:.02em;touch-action:manipulation}
+.btn-subscribe:hover{background:var(--dark-blue)}
+.nl-note{font-size:.68rem;color:var(--light);text-align:center}
+.nl-note a{color:var(--blue);text-decoration:none}
+
+@media(max-width:1024px) and (min-width:600px){.sidebar{display:grid;grid-template-columns:1fr 1fr;gap:2rem;padding-top:2.5rem}.donate-band{grid-column:1/-1}}
+@media(max-width:599px){.sidebar{padding-top:2rem}}
+
+/* ─── MODAL ───────────────────────────────────────────── */
+.modal-overlay{position:fixed;inset:0;z-index:2000;background:rgba(0,15,40,.65);backdrop-filter:blur(5px);opacity:0;visibility:hidden;transition:all .35s;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:1rem var(--page-pad)}
+.modal-overlay.open{opacity:1;visibility:visible}
+.modal{background:var(--white);max-width:min(800px,100%);margin:0 auto;transform:translateY(30px);transition:transform .35s ease;box-shadow:0 30px 80px rgba(0,15,40,.25);position:relative}
+.modal-overlay.open .modal{transform:translateY(0)}
+.modal-close{position:absolute;top:.75rem;right:.75rem;z-index:10;width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.92);backdrop-filter:blur(6px);border:1px solid var(--border);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1rem;color:var(--mid);transition:all .2s;box-shadow:0 2px 10px rgba(0,0,0,.1);touch-action:manipulation}
+.modal-close:hover{background:var(--blue);color:var(--white);transform:rotate(90deg)}
+.modal-hero{position:relative;overflow:hidden}
+.modal-hero-img{width:100%;height:clamp(180px,35vw,340px);object-fit:cover;object-position:top;display:block}
+.modal-hero-shade{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,15,50,.68) 0%,transparent 55%);pointer-events:none}
+.modal-hero-cap{position:absolute;bottom:0;left:0;right:0;padding:1.25rem clamp(1rem,3vw,2rem)}
+.m-tag{display:inline-flex;align-items:center;gap:.3rem;font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:var(--yellow);margin-bottom:.3rem}
+.m-tag i{font-size:.4rem}
+.m-hero-title{font-family:'Source Serif 4',serif;font-size:clamp(1.1rem,3vw,1.6rem);font-weight:700;color:var(--white);line-height:1.2}
+.modal-body{padding:clamp(1.25rem,3vw,2rem) clamp(1rem,3vw,2.5rem) clamp(1rem,3vw,1.5rem)}
+.modal-byline{display:flex;align-items:center;gap:.65rem;flex-wrap:wrap;padding:.7rem 1rem;background:var(--off);border-left:3px solid var(--blue);margin-bottom:1.5rem}
+.mbl-av{width:34px;height:34px;border-radius:50%;background:var(--lb);display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:700;color:var(--dark-blue);flex-shrink:0}
+.mbl-name{font-size:.82rem;font-weight:600;color:var(--navy)}
+.mbl-role{font-size:.7rem;color:var(--light)}
+.mbl-date{font-size:.7rem;color:var(--light);margin-left:auto;white-space:nowrap}
+.modal-prose p{font-size:clamp(.9rem,2vw,1rem);color:var(--mid);line-height:1.85;margin-bottom:1.1rem}
+.modal-prose p:last-child{margin-bottom:0}
+.modal-prose .lead{font-size:clamp(.95rem,2vw,1.1rem);color:var(--dark);line-height:1.75;border-left:3px solid var(--blue);padding-left:1.1rem;margin-bottom:1.35rem}
+.modal-prose h3{font-family:'Source Serif 4',serif;font-size:clamp(1rem,2vw,1.15rem);font-weight:700;color:var(--navy);margin:1.5rem 0 .6rem}
+.modal-prose blockquote{background:var(--lb);padding:1.1rem 1.25rem 1.1rem 1.75rem;border-left:4px solid var(--blue);margin:1.35rem 0;position:relative}
+.modal-prose blockquote::before{content:'"';font-family:'Source Serif 4',serif;font-size:2.5rem;color:var(--blue);opacity:.22;position:absolute;top:-.15rem;left:.6rem;line-height:1}
+.modal-prose blockquote p{font-family:'Source Serif 4',serif;font-style:italic;color:var(--navy);font-size:.95rem;margin-bottom:.35rem}
+.modal-prose blockquote cite{font-size:.72rem;color:var(--light);font-style:normal;font-weight:600}
+.modal-prose .inline-img{width:100%;height:clamp(140px,30vw,220px);object-fit:cover;display:block;margin:1.25rem 0}
+.modal-prose .stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:.6rem;margin:1.25rem 0}
+.m-stat{background:var(--off);padding:.75rem .85rem;text-align:center;border-top:2px solid var(--blue)}
+.m-stat-num{font-family:'Source Serif 4',serif;font-size:1.4rem;font-weight:700;color:var(--blue);display:block;line-height:1}
+.m-stat-label{font-size:.65rem;color:var(--light);text-transform:uppercase;letter-spacing:.06em;margin-top:.15rem}
+@media(max-width:420px){.modal-prose .stat-row{grid-template-columns:1fr 1fr}.m-stat:last-child{grid-column:1/-1}}
+.modal-foot{padding:1rem clamp(1rem,3vw,2.5rem);background:var(--off);border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.75rem}
+.share-row{display:flex;align-items:center;gap:.45rem;flex-wrap:wrap}
+.share-lbl{font-size:.72rem;font-weight:600;color:var(--mid)}
+.share-btn{width:32px;height:32px;border:1px solid var(--border);background:var(--white);display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:700;color:var(--mid);cursor:pointer;transition:all .2s;text-decoration:none;touch-action:manipulation}
+.share-btn:hover{background:var(--blue);color:var(--white);border-color:var(--blue)}
+.btn-donate-modal{background:var(--blue);color:var(--white);font-weight:600;font-size:.8rem;padding:.55rem 1.25rem;border:none;cursor:pointer;transition:all .25s;font-family:inherit;letter-spacing:.02em;touch-action:manipulation}
+.btn-donate-modal:hover{background:var(--dark-blue)}
+
+/* ─── FOOTER (matching previous file) ─────────────────── */
+footer{background:var(--navy);color:var(--white);padding:4rem 2rem 2rem}
+.footer-top{max-width:var(--container);margin:0 auto;display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:3rem;margin-bottom:3rem}
+.footer-brand .logo-text .lt-name{color:var(--white)}
+.footer-tagline{font-size:.875rem;color:rgba(255,255,255,.65);line-height:1.7;margin-top:1rem;margin-bottom:1.5rem}
+.footer-socials{display:flex;gap:.75rem;flex-wrap:wrap}
+.social-btn{width:38px;height:38px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--white);text-decoration:none;font-size:.875rem;font-weight:700;transition:all .25s}
+.social-btn:hover{background:var(--blue);border-color:var(--blue);transform:translateY(-2px)}
+.footer-col-title{font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.5);margin-bottom:1.25rem}
+.footer-links{list-style:none}
+.footer-links li{margin-bottom:.6rem}
+.footer-links a{font-size:.875rem;color:rgba(255,255,255,.72);text-decoration:none;transition:color .2s}
+.footer-links a:hover{color:var(--blue)}
+.footer-bottom{max-width:var(--container);margin:0 auto;border-top:1px solid rgba(255,255,255,.1);padding-top:2rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+.footer-copy{font-size:.8rem;color:rgba(255,255,255,.45)}
+.footer-legal{display:flex;gap:1.5rem;flex-wrap:wrap}
+.footer-legal a{font-size:.8rem;color:rgba(255,255,255,.45);text-decoration:none;transition:color .2s}
+.footer-legal a:hover{color:var(--blue)}
+@media(max-width:900px){.footer-top{grid-template-columns:1fr 1fr}}
+@media(max-width:540px){.footer-top{grid-template-columns:1fr;gap:2rem}.footer-bottom{flex-direction:column;text-align:center}.footer-legal{justify-content:center}}
+
+/* ─── REVEAL ──────────────────────────────────────────── */
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .65s ease,transform .65s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.r1{transition-delay:.1s}.r2{transition-delay:.2s}.r3{transition-delay:.3s}
+@media(hover:none){.lead-story:hover .lead-img,.editorial:hover .ed-img{transform:none;filter:none}}
+@media print{header,.mob-nav,.modal-overlay,.sidebar,.load-more-area,footer{display:none}.page-body{display:block}body{font-size:12pt}}
+</style>
+</head>
+<body>
+
+<!-- ══════ HEADER ══════════════════════════════════════ -->
+<header id="hdr" role="banner">
+  <div class="hdr">
+    <a href="index.html" class="logo" aria-label="PWF Homepage">
+      <div class="logo-mark" aria-hidden="true"></div>
+      <div class="logo-text">
+        <span class="lt-name">PWF</span>
+        <span class="lt-tag">Empowering Youth</span>
+      </div>
+    </a>
+    <nav class="desk-nav" role="navigation" aria-label="Main navigation">
+      <a href="about.html">About</a>
+      <a href="index.html#programs">What We Do</a>
+      <a href="stories.html" class="active">News</a>
+      <a href="index.html#get-involved">Get Involved</a>
+      <a href="contact.html">Contact</a>
+      <a href="donate.html" class="btn-donate-hdr">Donate</a>
+    </nav>
+    <button class="hamburger" aria-label="Toggle menu" aria-expanded="false" onclick="toggleMenu(this)">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<nav class="mob-nav" id="mobNav" aria-label="Mobile navigation">
+  <a href="about.html">About</a>
+  <a href="index.html#programs">What We Do</a>
+  <a href="stories.html">News</a>
+  <a href="index.html#get-involved">Get Involved</a>
+  <a href="contact.html">Contact</a>
+  <a href="donate.html" class="mob-donate">Donate Now</a>
+</nav>
+
+<!-- ══════ PAGE HERO ════════════════════════════════════ -->
+<div class="page-hero" style="
+  background:
+    linear-gradient(135deg, rgba(0,47,108,0.88) 0%, rgba(0,83,157,0.82) 55%, rgba(28,171,226,0.80) 100%),
+    url('https://images.unsplash.com/photo-1531219432768-9f540ce91ef3?w=1400&q=80') center/cover no-repeat;
+">
+  <div class="hero-inner">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="unicef-homepage.html">Home</a>
+      <span aria-hidden="true">›</span>
+      <strong style="color:rgba(255,255,255,.9)">Contact Us</strong>
+    </nav>
+    <div class="hero-eyebrow" aria-hidden="true">Get in Touch</div>
+    <h1>Contact <em>PWF</em></h1>
+  </div>
+</div>
+
+<!-- ══════ CONTENT ══════════════════════════════════════ -->
+<div class="page-body">
+
+  <main role="main" aria-label="Stories">
+
+    <!-- LEAD STORY -->
+    <div class="lead-story reveal" data-cat="education" data-id="1"
+         onclick="openModal(1)" tabindex="0" role="article" aria-label="Read featured story">
+      <div class="lead-img-wrap">
+        <img class="lead-img"
+          src="v.jpg"
+          alt="Inspiring young people at Abraham Seed Private School"
+          loading="eager"
+          onerror="this.src='https://images.unsplash.com/photo-1509062522246-3755977927d7?w=1200&q=85'">
+      </div>
+      <div class="lead-meta">
+        <span class="tag education">Education</span>
+        <div class="meta-sep" aria-hidden="true"></div>
+        <span class="meta-date">May 14, 2026</span>
+        <div class="meta-sep" aria-hidden="true"></div>
+        <span class="meta-read">5 min read</span>
+      </div>
+      <h2 class="lead-title">Inspiring Young People's Minds at Abraham Seed Private School</h2>
+      <p class="lead-excerpt">This visit exemplifies PWF's commitment to nurturing the next generation of leaders who are emotionally resilient, socially responsible, and purpose-driven. Our team spent the day engaging students on what it means to lead with purpose in a rapidly changing world.</p>
+      <div class="lead-byline">
+        <div class="b-avatar" aria-hidden="true">PW</div>
+        <div>
+          <div class="b-name">PWF Outreach Team</div>
+          <div class="b-role">Education &amp; Youth Development</div>
+        </div>
+        <span class="read-link" aria-hidden="true">Read the story <i class="fa-solid fa-arrow-right"></i></span>
+      </div>
+    </div>
+
+    <!-- EDITORIAL ROWS -->
+    <div class="editorial-list">
+
+      <div class="editorial reveal" data-cat="wash" data-id="2"
+           onclick="openModal(2)" tabindex="0" role="article" aria-label="Read story about building youth goals">
+        <div class="ed-img-wrap">
+          <img class="ed-img"
+            src="show.jpg"
+            alt="Students at a youth development programme"
+            loading="lazy"
+            onerror="this.src='https://images.unsplash.com/photo-1560969184-10fe8719e047?w=700&q=80'">
+        </div>
+        <div class="ed-body">
+          <div class="ed-meta">
+            <span class="tag wash">Youth Dev</span>
+            <div class="meta-sep" aria-hidden="true"></div>
+            <span class="meta-date">May 10, 2026</span>
+            <div class="meta-sep" aria-hidden="true"></div>
+            <span class="meta-read">4 min</span>
+          </div>
+          <h2 class="ed-title">Building a Strong Foundation for Youth Goals</h2>
+          <p class="ed-excerpt">Students learned how emotional resilience, discipline, and leadership skills can help them overcome challenges and stay focused on their dreams. We also emphasized the importance of mentorship, teamwork, and continuous learning as critical tools for growth.</p>
+          <div class="ed-footer">
+            <div class="ed-author">
+              <div class="ed-av" aria-hidden="true">PW</div>
+              <div><div class="ed-name">PWF Programmes</div><div class="ed-date">Youth Leadership Division</div></div>
+            </div>
+            <span class="read-link" aria-hidden="true">Read story <i class="fa-solid fa-arrow-right"></i></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="editorial flip reveal" data-cat="education" data-id="3"
+           onclick="openModal(3)" tabindex="0" role="article" aria-label="Read story about girls school enrollment">
+        <div class="ed-img-wrap">
+          <img class="ed-img"
+            src="c.jpg"
+            alt="Girls studying together in a classroom"
+            loading="lazy"
+            onerror="this.src='https://images.unsplash.com/photo-1509062522246-3755977927d7?w=700&q=80'">
+        </div>
+        <div class="ed-body">
+          <div class="ed-meta">
+            <span class="tag education">Education</span>
+            <div class="meta-sep" aria-hidden="true"></div>
+            <span class="meta-date">May 7, 2026</span>
+            <div class="meta-sep" aria-hidden="true"></div>
+            <span class="meta-read">6 min</span>
+          </div>
+          <h2 class="ed-title">Girls' School Enrollment Reaches Historic High in South Asia</h2>
+          <p class="ed-excerpt">Community programs and stipends have reversed decades of gender gaps in education access, with Bangladesh, Pakistan, and Nepal simultaneously achieving gender parity in primary school enrollment for the first time.</p>
+          <div class="ed-footer">
+            <div class="ed-author">
+              <div class="ed-av" aria-hidden="true">PW</div>
+              <div><div class="ed-name">PWF Education Team</div><div class="ed-date">South Asia Initiative</div></div>
+            </div>
+            <span class="read-link" aria-hidden="true">Read story <i class="fa-solid fa-arrow-right"></i></span>
+          </div>
+        </div>
+      </div>
+
+      
+      </div>
+
+    </div><!-- /editorial-list -->
+
+    <div class="load-more-area">
+      <div class="load-more-rule"><span class="load-more-label">Continue Reading</span></div>
+      <button class="btn-more" id="loadMoreBtn" onclick="loadMore()"><i class="fa-solid fa-chevron-down"></i> Load More Stories</button>
+    </div>
+
+  </main>
+
+  <!-- ───── SIDEBAR ─────────────────────────────────── -->
+  <aside class="sidebar" role="complementary" aria-label="Sidebar">
+
+    <div class="donate-band" role="region" aria-label="Donate">
+      <span class="donate-icon" aria-hidden="true"><i class="fa-solid fa-hand-holding-heart"></i></span>
+      <div class="donate-title">Support Our Mission</div>
+      <p class="donate-text">Your donation helps us reach more young people with the skills, mentorship, and opportunities they need to thrive.</p>
+      <button class="btn-donate-band" onclick="window.location='donate.html'">Donate Now</button>
+    </div>
+
+   
+
+    
+
+    
+
+  </aside>
+</div><!-- /page-body -->
+
+<!-- ══════ MODAL ════════════════════════════════════════ -->
+<div class="modal-overlay" id="modalOverlay" role="dialog" aria-modal="true"
+     aria-labelledby="m-hero-title" onclick="closeOnOverlay(event)">
+  <div class="modal" id="modalBox">
+    <button class="modal-close" onclick="closeModal()" aria-label="Close article"><i class="fa-solid fa-xmark"></i></button>
+    <div class="modal-hero">
+      <img class="modal-hero-img" id="m-img" src="" alt="" loading="lazy">
+      <div class="modal-hero-shade" aria-hidden="true"></div>
+      <div class="modal-hero-cap">
+        <div class="m-tag" id="m-tag"></div>
+        <h2 class="m-hero-title" id="m-hero-title"></h2>
+      </div>
+    </div>
+    <div class="modal-body">
+      <div class="modal-byline">
+        <div class="mbl-av" id="m-av"></div>
+        <div>
+          <div class="mbl-name" id="m-author"></div>
+          <div class="mbl-role" id="m-role"></div>
+        </div>
+        <div class="mbl-date" id="m-date"></div>
+      </div>
+      <div class="modal-prose" id="m-prose"></div>
+    </div>
+    <div class="modal-foot">
+      <div class="share-row">
+        <span class="share-lbl">Share:</span>
+        <a href="#" class="share-btn" aria-label="Share on Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+        <a href="#" class="share-btn" aria-label="Share on X"><i class="fa-brands fa-x-twitter"></i></a>
+        <a href="#" class="share-btn" aria-label="Share on WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+        <a href="#" class="share-btn" aria-label="Copy link"><i class="fa-solid fa-link"></i></a>
+      </div>
+      <button class="btn-donate-modal" onclick="window.location='donate.html'">Support Our Work</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════ FOOTER ═══════════════════════════════════════ -->
+<footer role="contentinfo">
+  <div class="footer-top">
+    <div class="footer-brand">
+      <a href="index.html" class="logo" aria-label="PWF Homepage">
+        <img src="lo.jpg" alt="Logo" style="width:50px;height:50px;border-radius:50%;object-fit:cover;border:2px solid #fff;">
+        <div class="logo-text"><span class="lt-name">POTENTIAL</span><span class="lt-tag">Within Foundation</span></div>
+      </a>
+      <p class="footer-tagline">POTENTIAL WITHIN FOUNDATION works to empower young people to achieve great things in life and push them towards their fullest potential.</p>
+      <div class="footer-socials" aria-label="Social media">
+        <a href="#" class="social-btn" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+        
+        <a href="#" class="social-btn" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+       
+        <a href="#" class="social-btn" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+      </div>
+    </div>
+    
+  </div>
+  <div class="footer-bottom">
+    <p class="footer-copy">© 2026 POTENTIAL WITHIN FOUNDATION. All rights reserved.</p>
+    <nav class="footer-legal" aria-label="Legal links">
+      <a href="#">Designed by ADAM MAKOLONI</a>
+    </nav>
+  </div>
+</footer>
+
+<script>
+/* ── Story data ─────────────────────────────────────── */
+const STORIES = {
+  1: {
+    img: 'v.jpg',
+    imgFallback: 'https://images.unsplash.com/photo-1509062522246-3755977927d7?w=900&q=80',
+    imgAlt: 'Young people at Abraham Seed Private School',
+    tag: '<i class="fa-solid fa-circle" style="font-size:.4rem"></i> Education',
+    av: 'PW',
+    author: 'PWF Outreach Team',
+    role: 'Education & Youth Development',
+    date: 'May 14, 2026',
+    title: 'Inspiring Young People\'s Minds at Abraham Seed Private School',
+    prose: `
+      <p class="lead">This visit exemplifies PWF's commitment to nurturing the next generation of leaders who are emotionally resilient, socially responsible, and purpose-driven.</p>
+      <p>Our team spent an energising day at Abraham Seed Private School, engaging students from Form 1 through Form 4 in interactive sessions on leadership, emotional intelligence, and what it means to live a life of purpose. The school welcomed us with remarkable enthusiasm — a testament to their dedication to holistic education.</p>
+      <div class="stat-row">
+        <div class="m-stat"><span class="m-stat-num">320+</span><span class="m-stat-label">Students Reached</span></div>
+        <div class="m-stat"><span class="m-stat-num">4</span><span class="m-stat-label">Sessions Held</span></div>
+        <div class="m-stat"><span class="m-stat-num">1 Day</span><span class="m-stat-label">Full Programme</span></div>
+      </div>
+      <h3>Purpose-Driven Leadership</h3>
+      <p>Students were challenged to think deeply about their values, their strengths, and the kind of leaders they want to become. Activities ranged from group reflections on personal challenges to vision-mapping exercises where each student articulated a five-year goal for their life and community.</p>
+      <blockquote>
+        <p>When someone showed me that my struggles could be my strengths, everything changed. I stopped seeing school as a place I had to be — and started seeing it as a place I wanted to be.</p>
+        <cite>— Form 3 student, Abraham Seed Private School</cite>
+      </blockquote>
+      <p>PWF facilitators worked closely with teachers to ensure the programme complements the school's existing curriculum. Follow-up materials and a student mentorship pairing were left in place for the weeks ahead.</p>
+    `
+  },
+  2: {
+    img: 'show.jpg',
+    imgFallback: 'https://images.unsplash.com/photo-1560969184-10fe8719e047?w=900&q=80',
+    imgAlt: 'Students learning about resilience and leadership',
+    tag: '<i class="fa-solid fa-circle" style="font-size:.4rem"></i> Youth Dev',
+    av: 'PW',
+    author: 'PWF Programmes',
+    role: 'Youth Leadership Division',
+    date: 'May 10, 2026',
+    title: 'Building a Strong Foundation for Youth Goals',
+    prose: `
+      <p class="lead">Students learned how emotional resilience, discipline, and leadership skills can help them overcome challenges and stay focused on their dreams.</p>
+      <p>In a series of workshops held across three partner schools this month, PWF facilitators guided over 200 young people through structured goal-setting and resilience-building exercises. The sessions drew on real stories of young Africans who turned adversity into achievement.</p>
+      <div class="stat-row">
+        <div class="m-stat"><span class="m-stat-num">200+</span><span class="m-stat-label">Youth Participants</span></div>
+        <div class="m-stat"><span class="m-stat-num">3</span><span class="m-stat-label">Partner Schools</span></div>
+        <div class="m-stat"><span class="m-stat-num">6</span><span class="m-stat-label">Workshops Run</span></div>
+      </div>
+      <h3>Mentorship and Teamwork</h3>
+      <p>We emphasised the importance of mentorship, teamwork, and continuous learning as critical tools for growth. Students formed peer accountability groups — small circles of three to five peers who will check in on each other's progress over the coming school term.</p>
+      <blockquote>
+        <p>I used to think I needed to figure everything out alone. Now I know that asking for help and building a team around me is actually the strongest thing I can do.</p>
+        <cite>— Workshop participant, aged 16</cite>
+      </blockquote>
+      <p>Each participant left with a personal goal card and was matched with an older student mentor. Teachers reported noticeable improvements in classroom engagement in the weeks following the sessions.</p>
+    `
+  },
+  3: {
+    img: 'c.jpg',
+    imgFallback: 'https://images.unsplash.com/photo-1509062522246-3755977927d7?w=900&q=80',
+    imgAlt: 'Girls studying together in a classroom',
+    tag: '<i class="fa-solid fa-circle" style="font-size:.4rem"></i> Education',
+    av: 'PW',
+    author: 'PWF Education Team',
+    role: 'South Asia Initiative',
+    date: 'May 7, 2026',
+    title: "Girls' School Enrollment Reaches Historic High in South Asia",
+    prose: `
+      <p class="lead">For the first time in recorded educational history, Bangladesh, Pakistan, and Nepal have simultaneously achieved gender parity in primary school enrollment.</p>
+      <p>The breakthrough is the result of school stipends covering uniforms, books, and transport; female community mobilisers; and a teacher training programme ensuring classrooms are safe environments for girls. PWF has been a regional partner in driving awareness and community engagement around this milestone.</p>
+      <div class="stat-row">
+        <div class="m-stat"><span class="m-stat-num">4.2M</span><span class="m-stat-label">Girls Enrolled</span></div>
+        <div class="m-stat"><span class="m-stat-num">3</span><span class="m-stat-label">Countries at Parity</span></div>
+        <div class="m-stat"><span class="m-stat-num">12K</span><span class="m-stat-label">Teachers Trained</span></div>
+      </div>
+      <h3>The Stipend Effect</h3>
+      <p>The stipend programme is confirmed as the single most impactful intervention. In Pakistan's Khyber Pakhtunkhwa province, enrollment of girls aged 6–10 rose by 61% in two years by removing the direct cost of education for families.</p>
+      <blockquote>
+        <p>When I was a girl, my father said there was no money for school fees. Now I watch my daughter leave every morning and feel the future has been repaired.</p>
+        <cite>— Nasreen Bibi, Parent, Peshawar District, Pakistan</cite>
+      </blockquote>
+      <p>Governments are now expanding the stipend to cover girls through age 16, with additional support for adolescent health and life skills education — areas where PWF continues to contribute curriculum expertise.</p>
+    `
+  },
+  4: {
+    img: 'https://images.unsplash.com/photo-1607613009820-a29f7bb81c04?w=900&q=80',
+    imgAlt: 'Aid worker at a nutrition centre',
+    tag: '<i class="fa-solid fa-circle" style="font-size:.4rem"></i> Nutrition',
+    av: 'HA',
+    author: 'Hassan Al-Rashid',
+    role: 'Nutrition Coordinator, Yemen',
+    date: 'May 3, 2026',
+    title: 'Emergency Nutrition Programs Halt Malnutrition Crisis in Yemen',
+    prose: `
+      <p class="lead">Ready-to-use therapeutic food distributed through our supply chain has reversed acute malnutrition across Yemen's most affected governorates, achieving a 91% recovery rate.</p>
+      <p>At the peak of the crisis, 2.3 million children under five were acutely malnourished. The CMAM programme now operates across 8,500 nutrition sites in 20 of Yemen's 22 governorates, pulling hundreds of thousands of children back from the brink.</p>
+      <div class="stat-row">
+        <div class="m-stat"><span class="m-stat-num">400K</span><span class="m-stat-label">Children Treated</span></div>
+        <div class="m-stat"><span class="m-stat-num">8,500</span><span class="m-stat-label">Nutrition Sites</span></div>
+        <div class="m-stat"><span class="m-stat-num">91%</span><span class="m-stat-label">Recovery Rate</span></div>
+      </div>
+      <h3>The Power of Therapeutic Food</h3>
+      <p>Ready-to-use therapeutic food — a fortified peanut-paste product — can be administered at home without refrigeration. This is transformative in a country where health facilities are partially destroyed or inaccessible to many families.</p>
+      <blockquote>
+        <p>My son Tariq was so thin I could count every rib. After six weeks on the therapeutic food, he was running. He came back to me.</p>
+        <cite>— Fatima, Mother, Hodeidah Governorate, Yemen</cite>
+      </blockquote>
+      <p>Expanded access to the remaining two governorates is the next priority, with advocacy ongoing to ensure humanitarian corridors remain open for delivery of supplies.</p>
+    `
+  }
+};
+
+/* ── Modal ─────────────────────────────────────────── */
+function openModal(id) {
+  const s = STORIES[id]; if (!s) return;
+  const img = document.getElementById('m-img');
+  img.src = s.img;
+  img.alt = s.imgAlt;
+  img.onerror = () => { if (s.imgFallback) img.src = s.imgFallback; };
+  document.getElementById('m-tag').innerHTML = s.tag;
+  document.getElementById('m-hero-title').textContent = s.title;
+  document.getElementById('m-av').textContent = s.av;
+  document.getElementById('m-author').textContent = s.author;
+  document.getElementById('m-role').textContent = s.role;
+  document.getElementById('m-date').textContent = s.date;
+  document.getElementById('m-prose').innerHTML = s.prose;
+  const overlay = document.getElementById('modalOverlay');
+  overlay.classList.add('open');
+  document.body.style.overflow = 'hidden';
+  overlay.scrollTop = 0;
+}
+function closeModal() {
+  document.getElementById('modalOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function closeOnOverlay(e) { if (e.target === document.getElementById('modalOverlay')) closeModal(); }
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+/* ── Keyboard ───────────────────────────────────────── */
+document.querySelectorAll('[tabindex="0"]').forEach(el => {
+  el.addEventListener('keydown', e => {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); el.click(); }
+  });
+});
+
+/* ── Filter ─────────────────────────────────────────── */
+function filterStories(cat, btn) {
+  document.querySelectorAll('[data-cat]').forEach(el => {
+    const match = cat === 'all' || el.dataset.cat === cat;
+    el.style.opacity = match ? '1' : '0.2';
+    el.style.pointerEvents = match ? '' : 'none';
+    el.setAttribute('aria-hidden', match ? 'false' : 'true');
+  });
+  document.querySelectorAll('.f-btn').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+}
+
+/* ── Load more ──────────────────────────────────────── */
+function loadMore() {
+  const btn = document.getElementById('loadMoreBtn');
+  btn.innerHTML = '<i class="fa-solid fa-check"></i> All stories loaded';
+  btn.disabled = true;
+}
+
+/* ── Header scroll ──────────────────────────────────── */
+window.addEventListener('scroll', () => {
+  document.getElementById('hdr').classList.toggle('scrolled', window.scrollY > 50);
+}, { passive: true });
+
+/* ── Mobile menu ────────────────────────────────────── */
+function toggleMenu(btn) {
+  const nav = document.getElementById('mobNav');
+  const open = nav.classList.toggle('open');
+  btn.setAttribute('aria-expanded', open);
+  const s = btn.querySelectorAll('span');
+  if (open) {
+    s[0].style.transform = 'rotate(45deg) translate(5px,5px)';
+    s[1].style.opacity = '0';
+    s[2].style.transform = 'rotate(-45deg) translate(5px,-5px)';
+  } else {
+    s.forEach(x => { x.style.transform = ''; x.style.opacity = ''; });
+  }
+}
+document.querySelectorAll('.mob-nav a').forEach(a => {
+  a.addEventListener('click', () => {
+    document.getElementById('mobNav').classList.remove('open');
+    const btn = document.querySelector('.hamburger');
+    btn.setAttribute('aria-expanded', 'false');
+    btn.querySelectorAll('span').forEach(x => { x.style.transform = ''; x.style.opacity = ''; });
+  });
+});
+
+/* ── Scroll reveal ──────────────────────────────────── */
+const revObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('visible'); revObs.unobserve(e.target); }
+  });
+}, { threshold: .06, rootMargin: '0px 0px -30px 0px' });
+document.querySelectorAll('.reveal').forEach(el => revObs.observe(el));
+</script>
+</body>
+</html>

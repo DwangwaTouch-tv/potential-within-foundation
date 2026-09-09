@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Donate - Potential Within Foundation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,300&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+<style>
+  :root{--unicef-blue:#1CABE2;--unicef-dark-blue:#00539D;--unicef-navy:#002F6C;--unicef-yellow:#FFC20E;--unicef-orange:#F26A21;--unicef-red:#E2231A;--white:#FFFFFF;--off-white:#F7FAFD;--light-blue:#E8F4FB;--mid-blue:#C8E5F5;--text-dark:#1A1A2E;--text-mid:#374151;--text-light:#6B7280;--border:rgba(28,171,226,0.15)}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:'DM Sans',sans-serif;color:var(--text-dark);background:var(--white);overflow-x:hidden;line-height:1.6}
+
+  /* HEADER */
+  header{position:fixed;top:0;left:0;right:0;z-index:1000;background:var(--white);border-bottom:1px solid var(--border);transition:box-shadow .3s ease}
+  header.scrolled{box-shadow:0 4px 30px rgba(0,83,157,.12)}
+  .header-inner{max-width:1280px;margin:0 auto;padding:0 2rem;height:72px;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+  .logo{display:flex;align-items:center;gap:.6rem;text-decoration:none;flex-shrink:0}
+  .logo-img{width:50px;height:50px;border-radius:50%;object-fit:cover;border:2px solid #fff}
+  .logo-text{display:flex;flex-direction:column;line-height:1}
+  .logo-text span:first-child{font-family:'Source Serif 4',serif;font-weight:700;font-size:1.25rem;color:var(--unicef-dark-blue);letter-spacing:.04em}
+  .logo-text span:last-child{font-size:.65rem;font-weight:500;color:var(--unicef-blue);letter-spacing:.08em;text-transform:uppercase}
+  nav{display:flex;align-items:center;gap:.25rem}
+  nav a{font-size:.875rem;font-weight:500;color:var(--text-mid);text-decoration:none;padding:.5rem .75rem;border-radius:6px;transition:all .2s;white-space:nowrap}
+  nav a:hover, nav a.active{color:var(--unicef-blue);background:var(--light-blue)}
+  .btn-donate-header{background:var(--unicef-blue);color:var(--white)!important;padding:.6rem 1.4rem!important;border-radius:50px!important;font-weight:600!important;font-size:.875rem!important;transition:all .25s!important;letter-spacing:.02em;box-shadow:0 2px 12px rgba(28,171,226,.35)}
+  .btn-donate-header:hover{background:var(--unicef-dark-blue)!important;transform:translateY(-1px);box-shadow:0 4px 20px rgba(28,171,226,.45)!important}
+  .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:.5rem;border:none;background:none}
+  .hamburger span{width:24px;height:2px;background:var(--text-dark);border-radius:2px;transition:all .3s;display:block}
+  .mobile-nav{display:none;position:fixed;top:72px;left:0;right:0;background:var(--white);border-bottom:1px solid var(--border);padding:1rem;z-index:999;flex-direction:column;gap:.5rem;box-shadow:0 8px 30px rgba(0,0,0,.08)}
+  .mobile-nav.open{display:flex}
+  .mobile-nav a{color:var(--text-dark);text-decoration:none;font-weight:500;padding:.75rem 1rem;border-radius:8px;transition:all .2s}
+  .mobile-nav a:hover, .mobile-nav a.active{background:var(--light-blue);color:var(--unicef-blue)}
+  .mobile-nav .btn-donate-mobile{background:var(--unicef-blue);color:var(--white);text-align:center;border-radius:50px;font-weight:600;box-shadow:0 2px 12px rgba(28,171,226,.35)}
+  @media(max-width:900px){nav{display:none}.hamburger{display:flex}}
+
+  /* PAGE HERO */
+  .page-hero {
+    margin-top: 72px;
+    background: linear-gradient(135deg, var(--unicef-navy) 0%, var(--unicef-dark-blue) 100%);
+    padding: 6rem 2rem 5rem;
+    text-align: center;
+    color: var(--white);
+    position: relative;
+    overflow: hidden;
+  }
+  .page-hero::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -20%;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(255,194,14,0.08) 0%, transparent 60%);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+  .page-hero .section-label { color: var(--unicef-yellow); justify-content: center; }
+  .page-hero .section-label::before { background: var(--unicef-yellow); }
+  .page-hero h1 {
+    font-family: 'Source Serif 4', serif;
+    font-size: clamp(2.2rem, 5vw, 3.2rem);
+    font-weight: 700;
+    margin-bottom: 1rem;
+    line-height: 1.2;
+  }
+  .page-hero p {
+    font-size: 1.1rem;
+    color: rgba(255,255,255,0.8);
+    max-width: 650px;
+    margin: 0 auto;
+    line-height: 1.7;
+  }
+
+  /* DONATE SECTION */
+  .donate-section { padding: 5rem 2rem; background: var(--off-white); }
+  .container { max-width: 1280px; margin: 0 auto; }
+  .section-label { font-size: .75rem; font-weight: 600; text-transform: uppercase; letter-spacing: .12em; color: var(--unicef-blue); display: flex; align-items: center; gap: .75rem; margin-bottom: .75rem; }
+  .section-label::before { content: ''; width: 24px; height: 2px; background: var(--unicef-blue); border-radius: 2px; }
+  .section-title { font-family: 'Source Serif 4', serif; font-size: clamp(1.8rem, 3.5vw, 2.5rem); font-weight: 700; color: var(--unicef-navy); line-height: 1.15; margin-bottom: 1rem; }
+  .section-desc { font-size: 1.05rem; color: var(--text-mid); max-width: 700px; line-height: 1.7; margin-bottom: 3rem; }
+
+  .donate-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2rem;
+    margin-bottom: 4rem;
+  }
+
+  .donate-card {
+    background: var(--white);
+    border-radius: 20px;
+    padding: 2.5rem 2rem;
+    border: 2px solid var(--border);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .donate-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 16px 40px rgba(0, 83, 157, 0.1);
+    border-color: var(--unicef-blue);
+  }
+  .donate-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
+    background: linear-gradient(90deg, var(--unicef-blue), var(--unicef-dark-blue));
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+    transform-origin: left;
+  }
+  .donate-card:hover::before { transform: scaleX(1); }
+
+  .donate-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+  }
+  .icon-airtel { background: #E2231A; color: white; } /* Airtel Red */
+  .icon-tnm { background: #008C3A; color: white; } /* TNM Green */
+  .icon-bank { background: var(--unicef-dark-blue); color: white; }
+
+  .donate-provider {
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-light);
+    margin-bottom: 0.5rem;
+  }
+  .donate-card-title {
+    font-family: 'Source Serif 4', serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--unicef-navy);
+    margin-bottom: 1.5rem;
+  }
+
+  .detail-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.85rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .detail-row:last-of-type { border-bottom: none; }
+  .detail-label { font-size: 0.85rem; color: var(--text-light); font-weight: 500; }
+  .detail-value { 
+    font-size: 1rem; 
+    font-weight: 600; 
+    color: var(--text-dark); 
+    font-family: 'DM Sans', monospace; 
+    letter-spacing: 0.02em;
+  }
+
+  .copy-btn {
+    background: var(--light-blue);
+    color: var(--unicef-dark-blue);
+    border: none;
+    padding: 0.4rem 0.8rem;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-top: 0.5rem;
+  }
+  .copy-btn:hover { background: var(--unicef-blue); color: white; }
+  .copy-btn.copied { background: #10B981; color: white; }
+
+  /* IMPACT SECTION */
+  .impact-section {
+    background: var(--white);
+    padding: 5rem 2rem;
+    text-align: center;
+  }
+  .impact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+  }
+  .impact-item {
+    padding: 2rem;
+    background: var(--off-white);
+    border-radius: 16px;
+    border: 1px solid var(--border);
+  }
+  .impact-amount {
+    font-family: 'Source Serif 4', serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--unicef-blue);
+    margin-bottom: 0.5rem;
+  }
+  .impact-desc {
+    font-size: 0.95rem;
+    color: var(--text-mid);
+    line-height: 1.6;
+  }
+
+  /* PROOF OF PAYMENT */
+  .proof-section {
+    background: linear-gradient(135deg, var(--unicef-navy) 0%, var(--unicef-dark-blue) 100%);
+    padding: 4rem 2rem;
+    text-align: center;
+    color: white;
+    border-radius: 24px;
+    max-width: 900px;
+    margin: 0 auto 4rem auto;
+    position: relative;
+    overflow: hidden;
+  }
+  .proof-section::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -20%;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(255,194,14,0.1) 0%, transparent 60%);
+    border-radius: 50%;
+  }
+  .proof-section h3 {
+    font-family: 'Source Serif 4', serif;
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    position: relative;
+  }
+  .proof-section p {
+    color: rgba(255,255,255,0.8);
+    margin-bottom: 2rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+  }
+  .btn-whatsapp-proof {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: #25D366;
+    color: white;
+    font-weight: 700;
+    font-size: 1rem;
+    padding: 0.9rem 2rem;
+    border-radius: 50px;
+    text-decoration: none;
+    transition: all 0.25s;
+    position: relative;
+  }
+  .btn-whatsapp-proof:hover {
+    background: #128C7E;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(37, 211, 102, 0.3);
+  }
+
+  /* FOOTER */
+  footer{background:var(--unicef-navy);color:var(--white);padding:4rem 2rem 2rem}
+  .footer-top{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:3rem;margin-bottom:3rem}
+  .footer-brand .logo-text span:first-child{color:var(--white)}
+  .footer-tagline{font-size:.875rem;color:rgba(255,255,255,.65);line-height:1.7;margin-top:1rem;margin-bottom:1.5rem}
+  .footer-socials{display:flex;gap:.75rem;flex-wrap:wrap}
+  .social-btn{width:38px;height:38px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--white);text-decoration:none;font-size:.9rem;font-weight:700;transition:all .25s}
+  .social-btn:hover{background:var(--unicef-blue);border-color:var(--unicef-blue);transform:translateY(-2px)}
+  .footer-col-title{font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.5);margin-bottom:1.25rem}
+  .footer-links{list-style:none}
+  .footer-links li{margin-bottom:.6rem}
+  .footer-links a{font-size:.875rem;color:rgba(255,255,255,.72);text-decoration:none;transition:color .2s}
+  .footer-links a:hover{color:var(--unicef-blue)}
+  .footer-bottom{max-width:1280px;margin:0 auto;border-top:1px solid rgba(255,255,255,.1);padding-top:2rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+  .footer-copy{font-size:.8rem;color:rgba(255,255,255,.45)}
+  .footer-legal{display:flex;gap:1.5rem;flex-wrap:wrap}
+  .footer-legal a{font-size:.8rem;color:rgba(255,255,255,.45);text-decoration:none;transition:color .2s}
+  .footer-legal a:hover{color:var(--unicef-blue)}
+  @media(max-width:900px){.footer-top{grid-template-columns:1fr 1fr}}
+  @media(max-width:600px){.footer-top{grid-template-columns:1fr;gap:2rem}.footer-bottom{flex-direction:column;text-align:center}}
+
+  /* ANIMATIONS */
+  .reveal{opacity:0;transform:translateY(30px);transition:opacity .7s ease,transform .7s ease}
+  .reveal.visible{opacity:1;transform:translateY(0)}
+  .reveal-delay-1{transition-delay:.1s}
+  .reveal-delay-2{transition-delay:.2s}
+
+  /* Floating WhatsApp */
+  .whatsapp-float {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 999;
+  }
+  .whatsapp-float a {
+    background: #25D366;
+    color: white;
+    font-size: 24px;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    text-decoration: none;
+    box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .whatsapp-float a:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 20px rgba(37, 211, 102, 0.6);
+  }
+</style>
+</head>
+<body>
+
+<header id="header" role="banner">
+  <div class="header-inner">
+    <a href="index.html" class="logo" aria-label="Potential Within Foundation Homepage">
+      <img src="lo.jpg" alt="Logo" class="logo-img">
+      <div class="logo-text"><span>POTENTIAL</span><span>Within Foundation</span></div>
+    </a>
+    <nav role="navigation" aria-label="Main navigation">
+      
+      <a href="index.html">Home</a>
+      <a href="about.html">What WE Do</a>
+      <a href="team.html">Our team</a>
+      <a href="contact.html">Contact </a>
+      <a href="donate.html" class="btn-donate-header">Donate</a>
+    </nav>
+    <button class="hamburger" aria-label="Toggle mobile menu" aria-expanded="false" onclick="toggleMenu(this)">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<nav class="mobile-nav" id="mobileNav" aria-label="Mobile navigation">
+  
+      <a href="index.html">Home</a>
+      <a href="about.html">What WE Do</a>
+      <a href="team.html">Our team</a>
+      <a href="contact.html">Contact </a>
+      <a href="donate.html" class="btn-donate-header">Donate</a>
+</nav>
+
+<!-- PAGE HERO -->
+<section class="page-hero">
+  <div class="section-label">Support Our Mission</div>
+  <h1 class="reveal">Your Generosity Changes Lives</h1>
+  <p class="reveal reveal-delay-1">Every contribution, no matter the size, helps us provide emotional support, mentorship, and practical life skills to young people. Choose your preferred method below to make a secure donation.</p>
+</section>
+
+<!-- DONATION METHODS -->
+<section class="donate-section">
+  <div class="container">
+    <div style="text-align:center; margin-bottom: 3rem;">
+      <div class="section-label" style="justify-content:center">Secure Payment Options</div>
+      <h2 class="section-title reveal">How to Donate</h2>
+    </div>
+
+    <div class="donate-grid">
+      <!-- Airtel Money -->
+      <div class="donate-card reveal">
+        <div class="donate-icon icon-airtel">
+          <i class="fa-solid fa-mobile-screen-button"></i>
+        </div>
+        <div class="donate-provider">Mobile Money</div>
+        <h3 class="donate-card-title">Airtel Money</h3>
+        
+        <div class="detail-row">
+          <span class="detail-label">Account Name</span>
+          <span class="detail-value">Mirriam Banda</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Number</span>
+          <span class="detail-value" id="airtel-num">+265 994 688 742</span>
+        </div>
+        <button class="copy-btn" onclick="copyToClipboard('airtel-num', this)">
+          <i class="fa-regular fa-copy"></i> Copy Number
+        </button>
+      </div>
+
+      <!-- TNM Mpamba -->
+      <div class="donate-card reveal reveal-delay-1">
+        <div class="donate-icon icon-tnm">
+          <i class="fa-solid fa-sim-card"></i>
+        </div>
+        <div class="donate-provider">Mobile Money</div>
+        <h3 class="donate-card-title">TNM Mpamba</h3>
+        
+        <div class="detail-row">
+          <span class="detail-label">Account Name</span>
+          <span class="detail-value">Mirriam Banda</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Number</span>
+          <span class="detail-value" id="tnm-num">+265 888 478 804</span>
+        </div>
+        <button class="copy-btn" onclick="copyToClipboard('tnm-num', this)">
+          <i class="fa-regular fa-copy"></i> Copy Number
+        </button>
+      </div>
+
+      <!-- National Bank -->
+      <div class="donate-card reveal reveal-delay-2">
+        <div class="donate-icon icon-bank">
+          <i class="fa-solid fa-building-columns"></i>
+        </div>
+        <div class="donate-provider">Bank Transfer</div>
+        <h3 class="donate-card-title">Standard Bank</h3>
+        
+        <div class="detail-row">
+          <span class="detail-label">Account Name</span>
+          <span class="detail-value">Mirriam Banda</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Account Number</span>
+          <span class="detail-value" id="bank-num">9100004213146</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Branch</span>
+          <span class="detail-value">Dwangwa</span>
+        </div>
+        <button class="copy-btn" onclick="copyToClipboard('bank-num', this)">
+          <i class="fa-regular fa-copy"></i> Copy Account No.
+        </button>
+      </div>
+    </div>
+
+    <!-- PROOF OF PAYMENT -->
+    <div class="proof-section reveal">
+      <h3>Send Your Proof of Payment</h3>
+      <p>To help us track your generous contribution and issue a receipt, please send a screenshot of your transaction confirmation to our team via WhatsApp or Email.</p>
+      <a href="https://wa.me/265889464089?text=Hello%2C%20I%20have%20just%20made%20a%20donation%20to%20Potential%20Within%20Foundation.%20Here%20is%20my%20proof%20of%20payment." class="btn-whatsapp-proof" target="_blank">
+        <i class="fa-brands fa-whatsapp"></i> Send via WhatsApp
+      </a>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- FLOATING WHATSAPP -->
+<div class="whatsapp-float">
+  <a href="https://wa.me/265999123456" target="_blank" aria-label="Chat on WhatsApp">
+    <i class="fa-brands fa-whatsapp"></i>
+  </a>
+</div>
+
+<!-- FOOTER -->
+<footer role="contentinfo">
+  <div class="footer-top">
+    <div class="footer-brand">
+      <a href="index.html" class="logo">
+        <img src="lo.jpg" alt="Logo" class="logo-img">
+        <div class="logo-text"><span>POTENTIAL</span><span>Within Foundation</span></div>
+      </a>
+      <p class="footer-tagline">POTENTIAL WITHIN FOUNDATION works to empower young people to achieve great things in life and push them towards their fullest potential.</p>
+      <div class="footer-socials">
+        <a href="https://www.facebook.com/share/1LtgaLbTrs/" class="social-btn" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+      
+      </div>
+    </div>
+    
+    
+
+    <div>
+      <div class="footer-col-title">Contact</div>
+      <ul class="footer-links">
+        <li><a href="mailto:info@potentialwithin.org">potentialwithinfoundation@gmail.com</a></li>
+        <li><a href="tel:+265889464089">+265 889 464 089</a></li>
+        <li><span style="font-size:.875rem;color:rgba(255,255,255,.72);">Nkhotakota, Malawi</span></li>
+      </ul>
+    </div>
+  
+  <div class="footer-bottom">
+    <p class="footer-copy">© 2026 POTENTIAL WITHIN FOUNDATION. All rights reserved.</p>
+    <nav class="footer-legal">
+      
+      <a href="https://www.facebook.com/mtweega.damzy">Designed by ADAM MAKOLONI</a>
+    </nav>
+  </div>
+</footer>
+
+<script>
+// Header scroll effect
+const header = document.getElementById('header');
+window.addEventListener('scroll', () => { header.classList.toggle('scrolled', window.scrollY > 50); }, { passive: true });
+
+// Mobile menu toggle
+function toggleMenu(btn) {
+  const nav = document.getElementById('mobileNav');
+  const isOpen = nav.classList.toggle('open');
+  btn.setAttribute('aria-expanded', isOpen);
+  const spans = btn.querySelectorAll('span');
+  if (isOpen) {
+    spans[0].style.transform='rotate(45deg) translate(5px,5px)';
+    spans[1].style.opacity='0';
+    spans[2].style.transform='rotate(-45deg) translate(5px,-5px)';
+  } else {
+    spans[0].style.transform=''; spans[1].style.opacity=''; spans[2].style.transform='';
+  }
+}
+
+// Close mobile menu on link click
+document.querySelectorAll('.mobile-nav a').forEach(a => {
+  a.addEventListener('click', () => {
+    document.getElementById('mobileNav').classList.remove('open');
+    const btn = document.querySelector('.hamburger');
+    btn.setAttribute('aria-expanded','false');
+    btn.querySelectorAll('span').forEach(s => { s.style.transform=''; s.style.opacity=''; });
+  });
+});
+
+// Copy to Clipboard Functionality
+function copyToClipboard(elementId, btn) {
+  const textToCopy = document.getElementById(elementId).innerText;
+  navigator.clipboard.writeText(textToCopy).then(() => {
+    const originalHTML = btn.innerHTML;
+    btn.innerHTML = '<i class="fa-solid fa-check"></i> Copied!';
+    btn.classList.add('copied');
+    
+    setTimeout(() => {
+      btn.innerHTML = originalHTML;
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(err => {
+    console.error('Failed to copy: ', err);
+  });
+}
+
+// Scroll reveal animation
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => { 
+    if (entry.isIntersecting) { 
+      entry.target.classList.add('visible'); 
+      observer.unobserve(entry.target); 
+    }
+  });
+}, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+reveals.forEach(el => observer.observe(el));
+
+// Smooth scroll for anchor links
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const targetId = a.getAttribute('href');
+    if (targetId === '#') return;
+    const target = document.querySelector(targetId);
+    if (target) { 
+      e.preventDefault(); 
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' }); 
+    }
+  });
+});
+</script>
+</body>
+</html>

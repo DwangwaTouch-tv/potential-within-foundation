@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Potential Within Foundation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,300&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+<style>
+  :root{--unicef-blue:#1CABE2;--unicef-dark-blue:#00539D;--unicef-navy:#002F6C;--unicef-yellow:#FFC20E;--unicef-orange:#F26A21;--unicef-red:#E2231A;--white:#FFFFFF;--off-white:#F7FAFD;--light-blue:#E8F4FB;--mid-blue:#C8E5F5;--text-dark:#1A1A2E;--text-mid:#374151;--text-light:#6B7280;--border:rgba(28,171,226,0.15)}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:'DM Sans',sans-serif;color:var(--text-dark);background:var(--white);overflow-x:hidden;line-height:1.6}
+
+  header{position:fixed;top:0;left:0;right:0;z-index:1000;background:var(--white);border-bottom:1px solid var(--border);transition:box-shadow .3s ease}
+  header.scrolled{box-shadow:0 4px 30px rgba(0,83,157,.12)}
+  .header-inner{max-width:1280px;margin:0 auto;padding:0 2rem;height:72px;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+  .logo{display:flex;align-items:center;gap:.6rem;text-decoration:none;flex-shrink:0}
+  .logo-img{width:50px;height:50px;border-radius:50%;object-fit:cover;border:2px solid #fff}
+  .logo-text{display:flex;flex-direction:column;line-height:1}
+  .logo-text span:first-child{font-family:'Source Serif 4',serif;font-weight:700;font-size:1.25rem;color:var(--unicef-dark-blue);letter-spacing:.04em}
+  .logo-text span:last-child{font-size:.65rem;font-weight:500;color:var(--unicef-blue);letter-spacing:.08em;text-transform:uppercase}
+  nav{display:flex;align-items:center;gap:.25rem}
+  nav a{font-size:.875rem;font-weight:500;color:var(--text-mid);text-decoration:none;padding:.5rem .75rem;border-radius:6px;transition:all .2s;white-space:nowrap}
+  nav a:hover{color:var(--unicef-blue);background:var(--light-blue)}
+  .btn-donate-header{background:var(--unicef-blue);color:var(--white)!important;padding:.6rem 1.4rem!important;border-radius:50px!important;font-weight:600!important;font-size:.875rem!important;transition:all .25s!important;letter-spacing:.02em;box-shadow:0 2px 12px rgba(28,171,226,.35)}
+  .btn-donate-header:hover{background:var(--unicef-dark-blue)!important;transform:translateY(-1px);box-shadow:0 4px 20px rgba(28,171,226,.45)!important}
+  .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:.5rem;border:none;background:none}
+  .hamburger span{width:24px;height:2px;background:var(--text-dark);border-radius:2px;transition:all .3s;display:block}
+  .mobile-nav{display:none;position:fixed;top:72px;left:0;right:0;background:var(--white);border-bottom:1px solid var(--border);padding:1rem;z-index:999;flex-direction:column;gap:.5rem;box-shadow:0 8px 30px rgba(0,0,0,.08)}
+  .mobile-nav.open{display:flex}
+  .mobile-nav a{color:var(--text-dark);text-decoration:none;font-weight:500;padding:.75rem 1rem;border-radius:8px;transition:all .2s}
+  .mobile-nav a:hover{background:var(--light-blue);color:var(--unicef-blue)}
+  .mobile-nav .btn-donate-mobile{background:var(--unicef-blue);color:var(--white);text-align:center;border-radius:50px;font-weight:600;box-shadow:0 2px 12px rgba(28,171,226,.35)}
+  @media(max-width:900px){nav{display:none}.hamburger{display:flex}}
+
+  /* HERO SLIDER */
+  .hero { height: 100vh; width: 100%; position: relative; color: white; overflow: hidden; }
+  .hero-slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; transition: opacity 1s ease-in-out; background-size: cover; background-position: center; background-repeat: no-repeat; }
+  .hero-slide.active { opacity: 1; }
+  .hero-slide::before { content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 25, 60, 0.72); }
+  .hero-content { position: absolute; z-index: 2; top: 50%; transform: translateY(-50%); left: 10%; max-width: 520px; }
+  .tag { color: #FFD400; font-weight: bold; letter-spacing: 1px; margin-bottom: 10px; }
+  .hero-content h1 { font-size: 44px; line-height: 1.2; }
+  .hero-content h1 span { color: #FFD400; }
+  .desc { margin-top: 15px; line-height: 1.6; opacity: 0.9; }
+  .cta { margin-top: 22px; padding: 12px 26px; background: #FFD400; border: none; font-weight: bold; cursor: pointer; border-radius: 6px; transition: all 0.3s; }
+  .cta:hover { transform: translateY(-2px); box-shadow: 0 4px 15px rgba(255, 212, 0, 0.4); }
+  .slider { position: absolute; bottom: 35px; left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: 15px; z-index: 2; }
+  .arrow { width: 40px; height: 40px; border: 1px solid white; border-radius: 50%; display: flex; justify-content: center; align-items: center; cursor: pointer; font-size: 16px; color: white; background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(4px); transition: all 0.3s; }
+  .arrow:hover { background: rgba(255, 255, 255, 0.25); transform: scale(1.1); }
+  .dots { display: flex; gap: 8px; }
+  .dots span { width: 8px; height: 8px; background: white; display: inline-block; border-radius: 50%; opacity: 0.4; cursor: pointer; transition: all 0.3s; }
+  .dots span.active { opacity: 1; background: #FFD400; transform: scale(1.3); }
+  .dots span:hover { opacity: 0.8; }
+  .whatsapp { position: fixed; bottom: 20px; right: 20px; z-index: 3; }
+  .whatsapp a { background: #25D366; color: white; font-size: 24px; width: 48px; height: 48px; border-radius: 50%; text-decoration: none; box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4); transition: all 0.3s; display: flex; align-items: center; justify-content: center; }
+  .whatsapp a:hover { transform: scale(1.1); }
+  @media (max-width: 768px) {
+    .hero-content { left: 5%; right: 5%; }
+    .hero-content h1 { font-size: 32px; }
+  }
+
+  section{padding:5rem 2rem}
+  .container{max-width:1280px;margin:0 auto}
+  .section-label{font-size:.75rem;font-weight:600;text-transform:uppercase;letter-spacing:.12em;color:var(--unicef-blue);display:flex;align-items:center;gap:.75rem;margin-bottom:.75rem}
+  .section-label::before{content:'';width:24px;height:2px;background:var(--unicef-blue);border-radius:2px}
+  .section-title{font-family:'Source Serif 4',serif;font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:700;color:var(--unicef-navy);line-height:1.15;margin-bottom:1.25rem}
+  .section-desc{font-size:1.05rem;color:var(--text-mid);max-width:600px;line-height:1.7}
+
+  .stories{background:var(--off-white)}
+  .stories-header{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:3rem;gap:2rem;flex-wrap:wrap}
+  .view-all-link{font-size:.88rem;font-weight:600;color:var(--unicef-blue);text-decoration:none;display:flex;align-items:center;gap:.4rem;white-space:nowrap;transition:gap .2s}
+  .view-all-link:hover{gap:.7rem}
+  .view-all-link i{font-size:.75rem;transition:transform .2s}
+  .view-all-link:hover i{transform:translateX(3px)}
+
+  .stories-list{display:flex;flex-direction:column;gap:0}
+  .story-item{display:grid;grid-template-columns:200px 1fr;gap:2rem;padding:2.25rem 0;border-bottom:1px solid var(--border);align-items:start; cursor: pointer;}
+  .story-item:first-child{border-top:1px solid var(--border)}
+  .story-item.featured{grid-template-columns:1fr;padding-bottom:2.5rem}
+  .story-thumb-wrap{position:relative;overflow:hidden;border-radius:10px;flex-shrink:0}
+  .story-thumb{width:100%;height:130px;object-fit:cover;display:block;transition:transform .4s ease}
+  .story-item:hover .story-thumb{transform:scale(1.04)}
+  .story-item.featured .story-thumb-wrap{border-radius:14px;margin-bottom:1.5rem}
+  .story-item.featured .story-thumb{height:340px}
+  .story-meta-row{display:flex;align-items:center;gap:.75rem;margin-bottom:.6rem;flex-wrap:wrap}
+  .story-tag{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--unicef-dark-blue);background:var(--light-blue);padding:.25rem .65rem;border-radius:50px}
+  .story-date{font-size:.75rem;color:var(--text-light);display:inline-flex;align-items:center;gap:.35rem}
+  .story-date i{font-size:.7rem}
+  .story-headline{font-family:'Source Serif 4',serif;font-size:1.1rem;font-weight:600;color:var(--unicef-navy);line-height:1.35;margin-bottom:.5rem}
+  .story-item.featured .story-headline{font-size:1.5rem;margin-bottom:.75rem}
+  .story-excerpt{font-size:.9rem;color:var(--text-light);line-height:1.65;margin-bottom:1rem}
+  .story-item.featured .story-excerpt{font-size:1rem}
+  .btn-read-more{display:inline-flex;align-items:center;gap:.4rem;font-size:.82rem;font-weight:600;color:var(--unicef-blue);background:transparent;border:none;padding:0;transition:gap .2s,color .2s;font-family:'DM Sans',sans-serif}
+  .btn-read-more i{font-size:.7rem;transition:transform .2s}
+  
+  .story-item:hover .btn-read-more { color: var(--unicef-dark-blue); gap: .7rem; }
+  .story-item:hover .btn-read-more i { transform: translateX(3px); }
+
+  @media(max-width:700px){.story-item{grid-template-columns:1fr}.story-thumb{height:200px}.story-item.featured .story-thumb{height:220px}}
+
+  .story-modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,30,70,.65);z-index:2000;overflow-y:auto;padding:2rem 1rem;backdrop-filter:blur(4px)}
+  .story-modal-overlay.open{display:flex;align-items:flex-start;justify-content:center}
+  .story-modal{background:var(--white);border-radius:20px;max-width:780px;width:100%;overflow:hidden;animation:modalIn .35s ease both;position:relative;margin:auto}
+  @keyframes modalIn{from{opacity:0;transform:translateY(40px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}
+  .modal-img{width:100%;height:380px;object-fit:cover;display:block}
+  .modal-close{position:absolute;top:1rem;right:1rem;width:40px;height:40px;background:rgba(0,0,0,.45);backdrop-filter:blur(6px);border:none;border-radius:50%;color:#fff;font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s;z-index:10}
+  .modal-close:hover{background:rgba(0,0,0,.7)}
+  .modal-body{padding:2.5rem 2.5rem 3rem}
+  .modal-meta-row{display:flex;align-items:center;gap:.75rem;margin-bottom:1rem;flex-wrap:wrap}
+  .modal-tag{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--unicef-dark-blue);background:var(--light-blue);padding:.3rem .75rem;border-radius:50px}
+  .modal-date,.modal-read-time{font-size:.78rem;color:var(--text-light);display:inline-flex;align-items:center;gap:.3rem}
+  .modal-date i{font-size:.72rem}
+  .modal-title{font-family:'Source Serif 4',serif;font-size:clamp(1.5rem,3vw,2rem);font-weight:700;color:var(--unicef-navy);line-height:1.2;margin-bottom:1.5rem}
+  .modal-divider{width:48px;height:3px;background:var(--unicef-blue);border-radius:2px;margin:1.75rem 0}
+  .modal-content p{font-size:1rem;color:var(--text-mid);line-height:1.8;margin-bottom:1.25rem}
+  .modal-content p:last-child{margin-bottom:0}
+  @media(max-width:600px){.modal-body{padding:1.5rem 1.25rem 2rem}.modal-img{height:240px}}
+
+  .programs{background:var(--white)}
+
+  .emergency{background:linear-gradient(135deg,var(--unicef-navy) 0%,var(--unicef-dark-blue) 50%,var(--unicef-blue) 100%);position:relative;overflow:hidden}
+  .emergency::before{content:'';position:absolute;top:-50%;right:-20%;width:600px;height:600px;background:radial-gradient(circle,rgba(255,194,14,.08) 0%,transparent 60%);border-radius:50%;pointer-events:none}
+  .emergency::after{content:'';position:absolute;bottom:-30%;left:-10%;width:400px;height:400px;background:radial-gradient(circle,rgba(28,171,226,.15) 0%,transparent 60%);border-radius:50%;pointer-events:none}
+  .emergency-inner{position:relative;z-index:1}
+  .emergency .section-label{color:var(--unicef-yellow)}
+  .emergency .section-label::before{background:var(--unicef-yellow)}
+  .emergency .section-title{color:var(--white)}
+  .emergency-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:3rem}
+  
+  .emergency-card{background:rgba(255,255,255,.08);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.15);border-radius:16px;overflow:hidden;transition:all .3s;text-decoration:none;color:inherit;display:block}
+  .emergency-card:hover{background:rgba(255,255,255,.14);transform:translateY(-4px);border-color:rgba(255,255,255,.3)}
+  .emergency-card:hover .btn-act { background: var(--white); transform: translateY(-2px); }
+  
+  .emergency-img{width:100%;height:180px;object-fit:cover;display:block}
+  .emergency-body{padding:1.5rem}
+  .emergency-urgent{display:inline-flex;align-items:center;gap:.4rem;background:var(--unicef-red);color:var(--white);font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:.3rem .75rem;border-radius:50px;margin-bottom:.75rem;animation:pulse-badge 2s ease-in-out infinite}
+  @keyframes pulse-badge{0%,100%{box-shadow:0 0 0 0 rgba(226,35,26,.4)}50%{box-shadow:0 0 0 6px rgba(226,35,26,0)}}
+  .emergency-urgent i{font-size:.45rem}
+  .emergency-title{font-family:'Source Serif 4',serif;font-size:1.05rem;font-weight:600;color:var(--white);margin-bottom:.6rem;line-height:1.35}
+  .emergency-desc{font-size:.85rem;color:rgba(255,255,255,.72);line-height:1.6;margin-bottom:1.25rem}
+  .progress-bar{background:rgba(255,255,255,.15);border-radius:50px;height:6px;margin-bottom:.4rem;overflow:hidden}
+  .progress-fill{height:100%;background:linear-gradient(90deg,var(--unicef-yellow),var(--unicef-orange));border-radius:50px;transition:width 2s ease}
+  .progress-meta{display:flex;justify-content:space-between;font-size:.72rem;color:rgba(255,255,255,.65);margin-bottom:1.25rem}
+  .progress-meta strong{color:var(--unicef-yellow)}
+  .btn-act{width:100%;background:var(--unicef-yellow);color:var(--text-dark);font-weight:700;font-size:.875rem;padding:.75rem;border-radius:10px;border:none;cursor:pointer;transition:all .25s;letter-spacing:.02em; text-align: center; display: block;}
+  @media(max-width:900px){.emergency-grid{grid-template-columns:1fr 1fr}}
+  @media(max-width:600px){.emergency-grid{grid-template-columns:1fr}}
+
+  .get-involved{background:var(--off-white)}
+  .involved-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;margin-top:3rem}
+  
+  .involved-card{background:var(--white);border-radius:20px;padding:2.5rem 2rem;border:2px solid var(--border);transition:all .3s;position:relative;overflow:hidden; text-decoration: none; color: inherit; display: block;}
+  .involved-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--unicef-blue),var(--unicef-dark-blue));transform:scaleX(0);transition:transform .3s;transform-origin:left}
+  .involved-card:hover::before{transform:scaleX(1)}
+  .involved-card:hover{transform:translateY(-4px);box-shadow:0 16px 50px rgba(0,83,157,.1);border-color:var(--unicef-blue)}
+  .involved-card:hover .btn-outline { background: var(--unicef-blue); color: var(--white); transform: translateY(-2px); }
+  .involved-card:hover .btn-outline i { transform: translateX(3px); }
+  
+  .involved-icon-wrap{width:64px;height:64px;background:var(--light-blue);border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:1.8rem;margin-bottom:1.5rem;transition:all .3s;color:var(--unicef-dark-blue)}
+  .involved-card:hover .involved-icon-wrap{background:var(--unicef-blue);color:var(--white);transform:rotate(-6deg)}
+  .involved-title{font-family:'Source Serif 4',serif;font-size:1.25rem;font-weight:700;color:var(--unicef-navy);margin-bottom:.75rem}
+  .involved-desc{font-size:.9rem;color:var(--text-mid);line-height:1.65;margin-bottom:1.5rem}
+  .btn-outline{display:inline-flex;align-items:center;gap:.5rem;background:transparent;color:var(--unicef-blue);font-weight:600;font-size:.875rem;padding:.65rem 1.4rem;border-radius:50px;border:2px solid var(--unicef-blue);transition:all .25s;cursor:pointer}
+  .btn-outline i{font-size:.75rem;transition:transform .2s}
+  @media(max-width:900px){.involved-grid{grid-template-columns:1fr;gap:1.5rem}}
+
+  footer{background:var(--unicef-navy);color:var(--white);padding:4rem 2rem 2rem}
+  .footer-top{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:3rem;margin-bottom:3rem}
+  .footer-brand .logo-text span:first-child{color:var(--white)}
+  .footer-tagline{font-size:.875rem;color:rgba(255,255,255,.65);line-height:1.7;margin-top:1rem;margin-bottom:1.5rem}
+  .footer-socials{display:flex;gap:.75rem;flex-wrap:wrap}
+  .social-btn{width:38px;height:38px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--white);text-decoration:none;font-size:.9rem;font-weight:700;transition:all .25s}
+  .social-btn:hover{background:var(--unicef-blue);border-color:var(--unicef-blue);transform:translateY(-2px)}
+  .footer-col-title{font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.5);margin-bottom:1.25rem}
+  .footer-links{list-style:none}
+  .footer-links li{margin-bottom:.6rem}
+  .footer-links a{font-size:.875rem;color:rgba(255,255,255,.72);text-decoration:none;transition:color .2s}
+  .footer-links a:hover{color:var(--unicef-blue)}
+  .footer-bottom{max-width:1280px;margin:0 auto;border-top:1px solid rgba(255,255,255,.1);padding-top:2rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+  .footer-copy{font-size:.8rem;color:rgba(255,255,255,.45)}
+  .footer-legal{display:flex;gap:1.5rem;flex-wrap:wrap}
+  .footer-legal a{font-size:.8rem;color:rgba(255,255,255,.45);text-decoration:none;transition:color .2s}
+  .footer-legal a:hover{color:var(--unicef-blue)}
+  @media(max-width:900px){.footer-top{grid-template-columns:1fr 1fr}}
+  @media(max-width:600px){.footer-top{grid-template-columns:1fr;gap:2rem}.footer-bottom{flex-direction:column;text-align:center}}
+
+  .reveal{opacity:0;transform:translateY(30px);transition:opacity .7s ease,transform .7s ease}
+  .reveal.visible{opacity:1;transform:translateY(0)}
+  .reveal-delay-1{transition-delay:.1s}
+  .reveal-delay-2{transition-delay:.2s}
+  .reveal-delay-3{transition-delay:.3s}
+  .reveal-delay-4{transition-delay:.4s}
+</style>
+</head>
+<body>
+
+<header id="header" role="banner">
+  <div class="header-inner">
+    <a href="index.html" class="logo" aria-label="Potential Within Foundation Homepage">
+      <img src="lo.jpg" alt="Logo" class="logo-img">
+      <div class="logo-text"><span>POTENTIAL</span><span>Within Foundation</span></div>
+    </a>
+    <nav role="navigation" aria-label="Main navigation">
+      <a href="about.html">What We Do</a>
+      <a href="stories.html">News</a>
+      <a href="team.html">Our team</a>
+      <a href="contact.html">Contact </a>
+      <a href="donate.html" class="btn-donate-header">Donate</a>
+    </nav>
+    <button class="hamburger" aria-label="Toggle mobile menu" aria-expanded="false" onclick="toggleMenu(this)">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<nav class="mobile-nav" id="mobileNav" aria-label="Mobile navigation">
+      <a href="index.html">Home</a>
+      <a href="about.html">What WE Do</a>
+      <a href="team.html">Our team</a>
+      <a href="contact.html">Contact </a>
+      <a href="donate.html" class="btn-donate-header">Donate</a>
+</nav>
+
+<section class="hero">
+  <div class="hero-slide active" style="background-image: url('v.jpg')"></div>
+  <div class="hero-slide" style="background-image: url('C.JPG')"></div>
+  <div class="hero-slide" style="background-image: url('c.jpg')"></div>
+
+  <div class="hero-content">
+    <p class="tag">Empowering young people</p>
+    <h1>Potential Within <br><span>Foundation</span></h1>
+    <p class="desc">Every young person has untapped potential. Our job is to nurture it, guide it, and empower it to create positive change.</p>
+    <a href="donate.html" class="cta" style="text-decoration:none; display:inline-block; color:var(--text-dark);">Donate Now</a>
+  </div>
+
+  <div class="slider">
+    <div class="arrow" id="prevBtn"><i class="fa-solid fa-chevron-left"></i></div>
+    <div class="dots">
+      <span class="active" data-slide="0"></span>
+      <span data-slide="1"></span>
+      <span data-slide="2"></span>
+    </div>
+    <div class="arrow" id="nextBtn"><i class="fa-solid fa-chevron-right"></i></div>
+  </div>
+
+  <div class="whatsapp">
+    <a href="https://wa.me/265889464089" target="_blank" aria-label="Chat on WhatsApp">
+    <i class="fa-brands fa-whatsapp"></i>
+  </a>
+  </div>
+</section>
+
+<!-- STORIES -->
+<section class="stories" id="stories" aria-labelledby="stories-heading">
+  <div class="container">
+    <div class="stories-header">
+      <div>
+        <div class="section-label">Latest News</div>
+        <h2 class="section-title" id="stories-heading">Stories from the Field</h2>
+      </div>
+      
+    </div>
+
+    <div class="stories-list">
+      <article class="story-item featured reveal" onclick="openStory('health')">
+        <div class="story-thumb-wrap">
+          <img class="story-thumb" src="v.jpg" alt="Nurse administering vaccine to a child" loading="lazy">
+        </div>
+        <div>
+          <div class="story-meta-row">
+            <span class="story-tag">Education</span>
+            <span class="story-date"><i class="fa-regular fa-calendar"></i> May 14, 2026</span>
+          </div>
+          <h3 class="story-headline">Inspiring Young people minds at Abraham Seed Private school</h3>
+          <p class="story-excerpt">This visit exemplifies PWF's commitment to nurturing the next generation of leaders who are emotionally resilient, socially responsible, and purpose-driven.</p>
+          <span class="btn-read-more">Read More <i class="fa-solid fa-arrow-right"></i></span>
+        </div>
+      </article>
+
+      <article class="story-item reveal reveal-delay-1" onclick="openStory('wash')">
+        <div class="story-thumb-wrap">
+          <img class="story-thumb" src="show.jpg" alt="Child drinking clean water" loading="lazy">
+        </div>
+        <div>
+          <div class="story-meta-row">
+            <span class="story-tag">WASH</span>
+            <span class="story-date"><i class="fa-regular fa-calendar"></i> May 10, 2026</span>
+          </div>
+          <h3 class="story-headline">Building a Strong Foundation for Youth Goals</h3>
+          <p class="story-excerpt">Students learned how emotional resilience, discipline, and leadership skills can help them overcome challenges and stay focused on their dreams.</p>
+          <span class="btn-read-more">Read More <i class="fa-solid fa-arrow-right"></i></span>
+        </div>
+      </article>
+
+      <article class="story-item reveal reveal-delay-2" onclick="openStory('education')">
+        <div class="story-thumb-wrap">
+          <img class="story-thumb" src="c.jpg" alt="Girls studying in school" loading="lazy">
+        </div>
+        <div>
+          <div class="story-meta-row">
+            <span class="story-tag">Education</span>
+            <span class="story-date"><i class="fa-regular fa-calendar"></i> May 7, 2026</span>
+          </div>
+          <h3 class="story-headline">Girls' School Enrollment Reaches Historic High in South Asia</h3>
+          <p class="story-excerpt">Community programs and stipends have reversed decades of gender gaps in education access.</p>
+          <span class="btn-read-more">Read More <i class="fa-solid fa-arrow-right"></i></span>
+        </div>
+      </article>
+
+      
+    </div>
+  </div>
+</section>
+
+<!-- STORY MODAL -->
+<div class="story-modal-overlay" id="storyModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" onclick="closeStoryOnOverlay(event)">
+  <div class="story-modal">
+    <button class="modal-close" onclick="closeStory()" aria-label="Close story"><i class="fa-solid fa-xmark"></i></button>
+    <img class="modal-img" id="modalImg" src="" alt="">
+    <div class="modal-body">
+      <div class="modal-meta-row">
+        <span class="modal-tag" id="modalTag"></span>
+        <span class="modal-date" id="modalDate"></span>
+        <span class="modal-read-time" id="modalReadTime"></span>
+      </div>
+      <h2 class="modal-title" id="modalTitle"></h2>
+      <div class="modal-divider"></div>
+      <div class="modal-content" id="modalContent"></div>
+    </div>
+  </div>
+</div>
+
+
+
+     
+
+<!-- PROGRAMS -->
+<section class="programs" id="programs" aria-labelledby="programs-heading">
+  <div class="container">
+    <div style="max-width:640px">
+      <div class="section-label">Our Values</div>
+      <h2 class="section-title reveal" id="programs-heading">Our Vision</h2>
+      <p class="section-desc reveal reveal-delay-1">The Potential Within Foundation (PWF) envisions a generation of empowered, self-reliant, and purpose-driven youth. We aspire to build a society where young people are emotionally strong, mentally resilient, and socially responsible.</p>
+    </div>
+    <div style="max-width:640px;padding-top:50px">
+      <h2 class="section-title reveal">Our Mission</h2>
+      <p class="section-desc reveal reveal-delay-1">Our mission is to help young people discover and harness their potential by providing emotional support, mindset transformation, leadership development, mentorship, and practical life skills.</p>
+    </div>
+  </div>
+</section>
+
+<!-- GET INVOLVED (UPDATED LINKS) -->
+<section class="get-involved" id="get-involved" aria-labelledby="involved-heading">
+  <div class="container">
+    <div style="text-align:center;max-width:600px;margin:0 auto .5rem">
+      <div class="section-label" style="justify-content:center">Take Action</div>
+      <h2 class="section-title reveal" id="involved-heading" style="text-align:center">Get Involved</h2>
+      <p class="section-desc reveal reveal-delay-1" style="margin:0 auto;text-align:center">There are many ways to stand up for the world's most vulnerable children. Find the right role for you.</p>
+    </div>
+    <div class="involved-grid">
+      
+      <!-- 1. VOLUNTEER: Directs to organization email -->
+      <a href="mailto:info@potentialwithin.org?subject=Volunteer%20Inquiry%20-%20Potential%20Within%20Foundation" class="involved-card reveal">
+        <div class="involved-icon-wrap" aria-hidden="true"><i class="fa-regular fa-handshake"></i></div>
+        <h3 class="involved-title">Volunteer</h3>
+        <p class="involved-desc">Offer your time, skills, and expertise to support programs in your community and beyond. Make a direct difference in children's lives.</p>
+        <span class="btn-outline">Email Us to Sign Up <i class="fa-solid fa-arrow-right"></i></span>
+      </a>
+      
+      <!-- 2. FUNDRAISE: Connects to the donate page -->
+      <a href="donate.html" class="involved-card reveal reveal-delay-1">
+        <div class="involved-icon-wrap" aria-hidden="true"><i class="fa-solid fa-hand-holding-dollar"></i></div>
+        <h3 class="involved-title">Fundraise</h3>
+        <p class="involved-desc">Host a fundraiser, run a marathon, or create an online campaign. Every dollar you raise can transform a child's future.</p>
+        <span class="btn-outline">Start Fundraising <i class="fa-solid fa-arrow-right"></i></span>
+      </a>
+      
+      <!-- 3. ADVOCATE: Directs to organization email -->
+      <a href="mailto:info@potentialwithin.org?subject=Advocacy%20Inquiry%20-%20Potential%20Within%20Foundation" class="involved-card reveal reveal-delay-2">
+        <div class="involved-icon-wrap" aria-hidden="true"><i class="fa-solid fa-bullhorn"></i></div>
+        <h3 class="involved-title">Advocate</h3>
+        <p class="involved-desc">Use your voice to demand change. Advocate with world leaders and your own government to put children's rights at the top of the agenda.</p>
+        <span class="btn-outline">Email Us to Advocate <i class="fa-solid fa-arrow-right"></i></span>
+      </a>
+      
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer role="contentinfo">
+  <div class="footer-top">
+    <div class="footer-brand">
+      <a href="index.html" class="logo">
+        <img src="lo.jpg" alt="Logo" class="logo-img">
+        <div class="logo-text"><span>POTENTIAL</span><span>Within Foundation</span></div>
+      </a>
+      <p class="footer-tagline">POTENTIAL WITHIN FOUNDATION works to empower young people to achieve great things in life and push them towards their fullest potential.</p>
+      <div class="footer-socials">
+        <a href="https://www.facebook.com/share/1LtgaLbTrs/" class="social-btn" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+       
+      </div>
+    </div>
+  </div>
+  <div>
+      <div class="footer-col-title">Contact</div>
+      <ul class="footer-links">
+        <li><a href="mailto:info@potentialwithin.org">potentialwithin@gmuail.com</a></li>
+        <li><a href="tel:+265889464089">+265 889 464 089</a></li>
+        <li><span style="font-size:.875rem;color:rgba(255,255,255,.72);">Nkhotakota, Malawi</span></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p class="footer-copy">© 2026 POTENTIAL WITHIN FOUNDATION. All rights reserved.</p>
+    <nav class="footer-legal"><a href="https://www.facebook.com/mtweega.damzy">Designed by ADAM MAKOLONI</a></nav>
+  </div>
+</footer>
+
+<script>
+// SLIDER FUNCTIONALITY
+let currentSlide = 0;
+const slides = document.querySelectorAll('.hero-slide');
+const dots = document.querySelectorAll('.dots span');
+const totalSlides = slides.length;
+let autoSlideInterval;
+
+function showSlide(index) {
+  slides.forEach(slide => slide.classList.remove('active'));
+  dots.forEach(dot => dot.classList.remove('active'));
+  slides[index].classList.add('active');
+  dots[index].classList.add('active');
+}
+function nextSlide() { currentSlide = (currentSlide + 1) % totalSlides; showSlide(currentSlide); }
+function prevSlide() { currentSlide = (currentSlide - 1 + totalSlides) % totalSlides; showSlide(currentSlide); }
+function goToSlide(index) { currentSlide = index; showSlide(currentSlide); resetAutoSlide(); }
+function startAutoSlide() { autoSlideInterval = setInterval(nextSlide, 5000); }
+function resetAutoSlide() { clearInterval(autoSlideInterval); startAutoSlide(); }
+
+document.getElementById('nextBtn').addEventListener('click', () => { nextSlide(); resetAutoSlide(); });
+document.getElementById('prevBtn').addEventListener('click', () => { prevSlide(); resetAutoSlide(); });
+dots.forEach((dot, index) => { dot.addEventListener('click', () => goToSlide(index)); });
+startAutoSlide();
+
+// Stories data
+const stories = {
+  health: {
+    tag:'Education', date:'May 14, 2026', readTime:'2 min read',
+    img:'v.jpg', imgAlt:'Nurse administering vaccine to a child',
+    title:'Inspiring Young people minds at Abraham Seed Private school',
+    content:`<p>Our team visited Abraham seed private secondary school to encourage students to strive for excellence and embrace hard work in their studies.</p><p>During the visit, we engaged with students through motivational talks, highlighting the importance of discipline, perseverance, and personal growth. To celebrate outstanding effort and performance, we recognized several students who demonstrated dedication and commitment by rewarding them with exercise books as a token of encouragement.</p><p>The smiles on the students' faces and their eagerness to learn reinforced our belief that small acts of support and guidance can inspire confidence, build self-esteem, and foster a culture of excellence among young people.</p>`
+  },
+  wash: {
+    tag:'WASH', date:'May 10, 2026', readTime:'3 min read',
+    img:'show.jpg', imgAlt:'Child drinking clean water',
+    title:'Building a Strong Foundation for Youth Goals',
+    content:`<p>Our team visited local schools to engage with students about how they can reach their goals and build a strong foundation for success.</p><p>During the visit, we shared practical strategies on personal development, goal-setting, and mindset transformation. Students learned how emotional resilience, discipline, and leadership skills can help them overcome challenges and stay focused on their dreams.</p>`
+  },
+  education: {
+    tag:'Education', date:'May 7, 2026', readTime:'4 min read',
+    img:'c.jpg', imgAlt:'Girls studying in school',
+    title:"Girls' School Enrollment Reaches Historic High",
+    content:`<p>For the first time in recorded history, girls' enrollment in primary and secondary schools across targeted communities has matched and surpassed previous records. The milestone is the result of a decade-long investment in community-based incentive programs, teacher training, and infrastructure development.</p><p>Community programs and stipends have reversed decades of gender gaps in education access, ensuring every child has the opportunity to learn.</p>`
+  },
+  nutrition: {
+    tag:'Nutrition', date:'May 3, 2026', readTime:'3 min read',
+    img:'https://images.unsplash.com/photo-1607613009820-a29f7bb81c04?w=1200&q=80', imgAlt:'Aid worker with children',
+    title:'Emergency Nutrition Programs Halt Malnutrition Crisis',
+    content:`<p>Thanks to a coordinated emergency response led by the Potential Within Foundation, admission rates for severe malnutrition have fallen significantly, and survival rates for children who enter treatment have climbed to 94%.</p><p>The turnaround has been driven largely by the scaled distribution of ready-to-use therapeutic food (RUTF), making it possible to reach children in areas where health facilities are limited.</p>`
+  }
+};
+
+function openStory(key) {
+  const s = stories[key]; if (!s) return;
+  document.getElementById('modalImg').src = s.img;
+  document.getElementById('modalImg').alt = s.imgAlt;
+  document.getElementById('modalTag').textContent = s.tag;
+  document.getElementById('modalDate').innerHTML = '<i class="fa-regular fa-calendar"></i> ' + s.date;
+  document.getElementById('modalReadTime').textContent = '· ' + s.readTime;
+  document.getElementById('modalTitle').textContent = s.title;
+  document.getElementById('modalContent').innerHTML = s.content;
+  const overlay = document.getElementById('storyModal');
+  overlay.classList.add('open');
+  document.body.style.overflow = 'hidden';
+  overlay.scrollTop = 0;
+}
+function closeStory() {
+  document.getElementById('storyModal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function closeStoryOnOverlay(e) {
+  if (e.target === document.getElementById('storyModal')) closeStory();
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeStory(); });
+
+const header = document.getElementById('header');
+window.addEventListener('scroll', () => { header.classList.toggle('scrolled', window.scrollY > 50); }, { passive: true });
+
+function toggleMenu(btn) {
+  const nav = document.getElementById('mobileNav');
+  const isOpen = nav.classList.toggle('open');
+  btn.setAttribute('aria-expanded', isOpen);
+  const spans = btn.querySelectorAll('span');
+  if (isOpen) {
+    spans[0].style.transform='rotate(45deg) translate(5px,5px)';
+    spans[1].style.opacity='0';
+    spans[2].style.transform='rotate(-45deg) translate(5px,-5px)';
+  } else {
+    spans[0].style.transform=''; spans[1].style.opacity=''; spans[2].style.transform='';
+  }
+}
+
+document.querySelectorAll('.mobile-nav a').forEach(a => {
+  a.addEventListener('click', () => {
+    document.getElementById('mobileNav').classList.remove('open');
+    const btn = document.querySelector('.hamburger');
+    btn.setAttribute('aria-expanded','false');
+    btn.querySelectorAll('span').forEach(s => { s.style.transform=''; s.style.opacity=''; });
+  });
+});
+
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('visible'); observer.unobserve(entry.target); }});
+}, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+reveals.forEach(el => observer.observe(el));
+
+const progressFills = document.querySelectorAll('.progress-fill');
+const progressObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const el = entry.target, w = el.style.width;
+      el.style.width = '0%';
+      requestAnimationFrame(() => { setTimeout(() => { el.style.width = w; }, 100); });
+      progressObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.5 });
+progressFills.forEach(el => progressObserver.observe(el));
+
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+  });
+});
+</script>
+</body>
+</html>
